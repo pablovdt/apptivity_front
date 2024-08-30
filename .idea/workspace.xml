@@ -4,34 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3455f86-bac7-44eb-950e-bd75bfa8748c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/apptivity_front.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.streamlit/config.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/activity_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/category_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/city_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/organizer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/place_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/create_activity.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/logout.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/show_activities.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/show_next_activities.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
+    <list default="true" id="e3455f86-bac7-44eb-950e-bd75bfa8748c" name="Changes" comment="feat: improving">
+      <change afterPath="$PROJECT_DIR$/pages/update_activity.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared/activity_input_form.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/activity_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/activity_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/create_activity.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/create_activity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/logout.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/logout.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/show_activities.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/show_activities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/show_next_activities.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/show_next_activities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,17 +41,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/pablo/PycharmProjects/apptivity_front&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/pablo/PycharmProjects/apptivity_front"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/pages" />
     </key>
   </component>
   <component name="RunManager">
@@ -97,7 +84,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-ce3d9afa04ac-ba05f1cad1b1-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.20224.347" />
+        <option value="bundled-python-sdk-98f27166c754-ba05f1cad1b1-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.21829.153" />
       </set>
     </attachedChunks>
   </component>
@@ -110,6 +97,19 @@
       <option name="presentableId" value="Default" />
       <updated>1724262389183</updated>
     </task>
+    <task id="LOCAL-00001" summary="feat: improving">
+      <option name="closed" value="true" />
+      <created>1724351891243</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1724351891243</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: improving" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: improving" />
   </component>
 </project>

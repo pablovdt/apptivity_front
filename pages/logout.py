@@ -4,7 +4,10 @@ from auth import cookies
 
 cookies['organizer_name'] = ''
 cookies['organizer_id'] = ''
-cookies['apptivty_authenticated'] = ''
+cookies['organizer_email'] = ''
+cookies['organizer_cp'] = ''
+
+cookies['apptivty_authenticated'] = 'false'
 
 cookies.save()
 

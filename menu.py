@@ -12,8 +12,11 @@ def check_password(organizer_email: str, organizer_password: str):
 
         print(organizer_basic_info)
 
-        cookies['organizer_name'] = organizer_basic_info['name']
         cookies['organizer_id'] = str(organizer_basic_info['id'])
+        cookies['organizer_name'] = organizer_basic_info['name']
+        cookies['organizer_email'] = organizer_email
+        cookies['organizer_cp'] = str(organizer_basic_info['city_cp'])
+
         cookies['apptivty_authenticated'] = 'true'
 
         cookies.save()
