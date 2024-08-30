@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3455f86-bac7-44eb-950e-bd75bfa8748c" name="Changes" comment="feat: improving">
-      <change afterPath="$PROJECT_DIR$/pages/update_activity.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shared/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shared/activity_input_form.py" afterDir="false" />
+    <list default="true" id="e3455f86-bac7-44eb-950e-bd75bfa8748c" name="Changes" comment="feat: add update and repeat activity">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/activity_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/activity_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/create_activity.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/create_activity.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/logout.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/logout.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/show_activities.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/show_activities.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/show_next_activities.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/show_next_activities.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
@@ -105,11 +99,20 @@
       <option name="project" value="LOCAL" />
       <updated>1724351891243</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="feat: add update and repeat activity">
+      <option name="closed" value="true" />
+      <created>1725045870024</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1725045870024</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: improving" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: improving" />
+    <MESSAGE value="feat: add update and repeat activity" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add update and repeat activity" />
   </component>
 </project>

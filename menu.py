@@ -3,7 +3,7 @@ from auth import cookies
 from api.city_api import city_api
 from api.organizer import organizer_api
 
-from utils import set_background_image, hash_password
+from utils import set_background_image, hash_password, save_image
 
 
 def check_password(organizer_email: str, organizer_password: str):
@@ -16,6 +16,7 @@ def check_password(organizer_email: str, organizer_password: str):
         cookies['organizer_name'] = organizer_basic_info['name']
         cookies['organizer_email'] = organizer_email
         cookies['organizer_cp'] = str(organizer_basic_info['city_cp'])
+        cookies['organizer_image_path'] = organizer_basic_info['image_path']
 
         cookies['apptivty_authenticated'] = 'true'
 
@@ -45,12 +46,16 @@ def login():
             password = st.text_input("Contraseña", type='password')
             confirm_password = st.text_input("Repite contraseña", type='password')
             phone = st.text_input("Teléfono", value="")
+            uploaded_file = st.file_uploader("Selecciona una imagen", type=["jpg", "jpeg", "png"])
 
             # todo validate email
 
             if password != confirm_password:
                 st.warning("Las contraseñas no coinciden")
                 st.stop()
+
+            if uploaded_file is not None:
+                image_path = save_image(uploaded_file)
 
             hashed_password = hash_password(password)
 
@@ -61,7 +66,8 @@ def login():
                     "description": description,
                     "email": email,
                     "phone": phone,
-                    "password": hashed_password
+                    "password": hashed_password,
+                    "image_path": image_path
                 }
 
                 response = organizer_api.create_organizer(data)

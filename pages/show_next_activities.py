@@ -37,15 +37,19 @@ activities = activiti_api.get_activities(date_from=datetime.now().strftime("%Y-%
 df = pd.DataFrame(activities)
 
 for i, (index, row) in enumerate(df.iterrows()):
+
     with st.container(border=True):
         st.subheader(row['name'])
-        place = place_api.get_place_by_id(row["place_id"])['name']
-        st.write(f'📍 **Lugar**: {place}')
+        place = place_api.get_place_by_id(row["place_id"])
+        if not place['location_url']:
+            st.write(f'📍 **Lugar**: {place["name"]}')
+        else:
+            st.write(f'📍 **Lugar:** {place["name"]}. **Ubicación:** {place["location_url"]}')
         date_obj = datetime.fromisoformat(row['date'])
         st.write(f"📅 **Fecha:** {date_obj.strftime('%A, %d de %B de %Y')}")
         st.write(f"🕒 **Hora:** {date_obj.strftime('%H:%M:%S')}")
         st.write(f"💰 **Precio:** {row['price']} €")
-        st.write(f"📝 **Descripción:**{row['description']}")
+        st.write(f"📝 **Descripción:** {row['description']}")
         category = category_api.get_category_by_id(row['category_id'])['name']
         st.write(f"🏷️ **Categoría:** {category}")
         if row['cancelled']:
@@ -57,7 +61,11 @@ for i, (index, row) in enumerate(df.iterrows()):
         col1, _, col2 = st.columns([2, 2, 2])
 
         with col1:
-            st.button("Editar Actividad", key=f'edit{i}')
+            if st.button("Editar Actividad", key=f'edit{i}'):
+                st.session_state['activity_to_repeat'] = row
+                st.switch_page('pages/update_activity.py')
         with col2:
-            st.button("Repetir Actividad", key=f'repeat{i}')
+            if st.button("Repetir Actividad", key=f'repeat{i}'):
+                st.session_state['activity_to_repeat'] = row
+                st.switch_page('pages/create_activity.py')
 

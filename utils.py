@@ -1,4 +1,4 @@
-import base64
+import os
 
 import bcrypt
 
@@ -42,3 +42,14 @@ def add_one_year(date):
         # Manejar errores si la fecha no es válida
         print(f"Error al añadir un año a la fecha: {e}")
         return date
+
+
+UPLOAD_DIR = "organizers_images"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+
+def save_image(uploaded_file):
+    file_path = os.path.join(UPLOAD_DIR, uploaded_file.name)
+    with open(file_path, "wb") as f:
+        f.write(uploaded_file.getbuffer())
+    return file_path
