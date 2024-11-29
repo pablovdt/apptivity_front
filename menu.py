@@ -15,7 +15,7 @@ def check_password(organizer_email: str, organizer_password: str):
         cookies['organizer_id'] = str(organizer_basic_info['id'])
         cookies['organizer_name'] = organizer_basic_info['name']
         cookies['organizer_email'] = organizer_email
-        cookies['organizer_cp'] = str(organizer_basic_info['city_cp'])
+        cookies['city_id'] = str(organizer_basic_info['city_id'])
         cookies['organizer_image_path'] = organizer_basic_info['image_path']
 
         cookies['apptivty_authenticated'] = 'true'
@@ -29,7 +29,7 @@ def login():
 
     cities: list = city_api.get_cities()
 
-    cities_options = {city["name"]: city["cp"] for city in cities}
+    cities_options = {city["name"]: city["id"] for city in cities}
 
     st.image("images/logotipo_apptivity.png")
 
@@ -40,7 +40,7 @@ def login():
             st.subheader("Registrate")
             name = st.text_input("Nombre", value="")
             city_selected = st.selectbox("Municipio", cities_options.keys())
-            city_cp = cities_options[city_selected]
+            city_id = cities_options[city_selected]
             description = st.text_area("Descripción", value="")
             email = st.text_input("Correo Electrónico", value="")
             password = st.text_input("Contraseña", type='password')
@@ -62,7 +62,7 @@ def login():
             if st.form_submit_button("Registrarse"):
                 data = {
                     "name": name,
-                    "city_cp": city_cp,
+                    "city_id": city_id,
                     "description": description,
                     "email": email,
                     "phone": phone,
@@ -88,13 +88,14 @@ def login():
 
 
 def authenticated_menu():
-    st.sidebar.image("images/logotipo_apptivity.png")
+    st.sidebar.image("images/logotipo_apptivity2.png")
     for _ in range(2):
         st.sidebar.text('')
     st.sidebar.page_link("app.py", label="🏠 Inicio")
     st.sidebar.page_link("pages/create_activity.py", label="📝 Crear actividad")
     st.sidebar.page_link("pages/show_next_activities.py", label="📅  Ver próximas actividades")
     st.sidebar.page_link("pages/show_activities.py", label="📄 Ver todas las actividades")
+    st.sidebar.page_link("pages/statistics.py", label=" 📊 Estadisticas")
     st.sidebar.markdown('---')
     st.sidebar.page_link("pages/logout.py", label="Logout")
 

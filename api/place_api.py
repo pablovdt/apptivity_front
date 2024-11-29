@@ -6,9 +6,9 @@ from api.api import Api
 class PlaceApi(Api):
     endpoint_base = 'places/'
 
-    def get_places_by_cp(self, cp: str):
+    def get_places_by_id(self, place_id: str):
         try:
-            response = requests.get(url=f"{self.url}{self.endpoint_base}places/?city_cp={cp}")
+            response = requests.get(url=f"{self.url}{self.endpoint_base}places/?city_id={place_id}")
 
             return response.json()
 

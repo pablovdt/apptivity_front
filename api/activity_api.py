@@ -9,7 +9,6 @@ class ActivityApi(Api):
     endpoint_base = 'activities/'
 
     def create_activity(self, activity: dict):
-        # Enviar solicitud POST
         try:
             response = requests.post(
                 'http://localhost:8000/activities/create_activity/',
@@ -34,7 +33,7 @@ class ActivityApi(Api):
             print(f"Error en la solicitud: {e}")
 
     def get_activities(self, is_date_order_asc: bool = True, date_from: str = None, activity_name: str = None,
-                       place_id: int = None, cancelled: bool = False):
+                       place_id: int = None, cancelled: bool = False, organizer_id=None):
 
         url = f'{self.url}{self.endpoint_base}activities?organizer_id={cookies["organizer_id"]}'
         try:
@@ -53,6 +52,20 @@ class ActivityApi(Api):
             if cancelled:
                 url += f'&cancelled=true'
 
+            if organizer_id:
+                url += f'&organizer_id={organizer_id}'
+
+            response = requests.get(url=url)
+
+            return response.json()
+
+        except requests.exceptions.RequestException as e:
+            print(f"Error en la solicitud: {e}")
+
+    def get_activities_by_month(self, year: int):
+
+        url = f'{self.url}{self.endpoint_base}activities_by_month/?organizer_id={cookies["organizer_id"]}&year={year}'
+        try:
             response = requests.get(url=url)
 
             return response.json()

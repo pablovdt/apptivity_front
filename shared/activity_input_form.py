@@ -4,7 +4,7 @@ from datetime import datetime
 
 from api.category_api import category_api
 from api.place_api import place_api
-from utils import add_one_year
+from utils import add_one_year, save_image
 
 
 def activity_input_form():
@@ -21,10 +21,10 @@ def activity_input_form():
             "price": st.session_state['activity_to_repeat']['price'],
             "description": st.session_state['activity_to_repeat']['description'],
             "category_id": st.session_state['activity_to_repeat']['category_id'],
-            "cancelled": False
+            "cancelled": False,
+            "image_path": st.session_state['activity_to_repeat']['image_path']
         }
     else:
-        print('se rellena por defecto')
         prefill_values = {
             "name": "",
             "place_id": None,
@@ -33,10 +33,11 @@ def activity_input_form():
             "price": 0.0,
             "description": "",
             "category_id": None,
-            "cancelled": False
+            "cancelled": False,
+            "image_path": ""
         }
 
-    places: list = place_api.get_places_by_cp(cookies['organizer_cp'])
+    places: list = place_api.get_places_by_id(cookies['city_id'])
     places_options = {place["name"]: place["id"] for place in places}
 
     categories: list = category_api.get_categories()
@@ -68,6 +69,13 @@ def activity_input_form():
 
         cancelled = st.checkbox("Cancelado", value=prefill_values['cancelled'])
 
+        uploaded_file = st.file_uploader("Selecciona una imagen. Si no la proporcionas se pondrá la de tu perfil", type=["jpg", "jpeg", "png"])
+
+        if uploaded_file is not None:
+            image_path = save_image(uploaded_file)
+        else:
+            image_path = "images/logotipo_apptivity.png"  # todo, sustituir por la del perfil de cada organizador
+
         submit_button = st.form_submit_button("Enviar")
 
         if submit_button:
@@ -80,6 +88,7 @@ def activity_input_form():
                 "price": price,
                 "organizer_id": cookies['organizer_id'],
                 "description": description,
+                "image_path": image_path,
                 "category_id": category_id,
                 "cancelled": cancelled,
                 "number_of_assistances": 0,

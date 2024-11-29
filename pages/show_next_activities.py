@@ -25,7 +25,7 @@ with col1:
 with col2:
     cancelled = st.toggle('Cancelada', value=False)
 with col3:
-    places: list = place_api.get_places_by_cp("26312")
+    places: list = place_api.get_places_by_id(cookies['city_id'])
     places_options = {"": ""}
     places_options.update({place["name"]: place["id"] for place in places})
     place_selected_name = st.selectbox("Selecciona un lugar", places_options.keys())
@@ -57,6 +57,7 @@ for i, (index, row) in enumerate(df.iterrows()):
         st.write(f"👥 **Número de asistencias:** {row['number_of_assistances']}")
         st.write(f"📤 **Número de envios:** {row['number_of_shipments']}")
         st.write(f"🗑️ **Número de descartes:** {row['number_of_discards']}")
+        st.image(row['image_path'])
 
         col1, _, col2 = st.columns([2, 2, 2])
 
