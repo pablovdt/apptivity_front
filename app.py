@@ -1,7 +1,7 @@
 import streamlit as st
 from dotenv import load_dotenv
 
-from api.activity_api import activiti_api
+
 
 
 st.set_page_config(
@@ -23,6 +23,8 @@ st.image(cookies['organizer_image_path'])
 
 from datetime import datetime, timedelta
 import pytz
+
+from api.activity_api import activiti_api
 
 activities = activiti_api.get_activities()
 
