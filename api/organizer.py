@@ -22,15 +22,19 @@ class OrganizerApi(Api):
             print(f"Error en la solicitud: {e}")
 
     def validate_organizer(self, organizer_email: str, organizer_password: str):
+
         response = requests.get(url=f"{self.url}{self.endpoint_base}organizer/password_by_email/{organizer_email}")
 
-        stored_password = response.json()
+        if response.status_code == 200:
 
-        if verify_hash_password(password=organizer_password, stored_hased_password=stored_password):
-            return True
+            stored_password = response.json()
+
+            if verify_hash_password(password=organizer_password, stored_hased_password=stored_password):
+                return True
+            else:
+                return False
         else:
             return False
-
     def get_organizer_basic_info(self, organizer_email):
         response = requests.get(url=f"{self.url}{self.endpoint_base}organizer_by_email/{organizer_email}")
 

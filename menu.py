@@ -1,101 +1,96 @@
 import streamlit as st
+
+from api.user_api import user_api
 from auth import cookies
 from api.city_api import city_api
+import json
 from api.organizer import organizer_api
 
 from utils import set_background_image, hash_password, save_image
 
 
-def check_password(organizer_email: str, organizer_password: str):
-    if organizer_api.validate_organizer(organizer_email=organizer_email, organizer_password=organizer_password):
-        organizer_basic_info: dict = organizer_api.get_organizer_basic_info(organizer_email)
+def check_password(person_email: str, person_password: str):
+
+    if organizer_api.validate_organizer(organizer_email=person_email, organizer_password=person_password):
+        organizer_basic_info: dict = organizer_api.get_organizer_basic_info(person_email)
 
         print(organizer_basic_info)
 
         cookies['organizer_id'] = str(organizer_basic_info['id'])
         cookies['organizer_name'] = organizer_basic_info['name']
-        cookies['organizer_email'] = organizer_email
+        cookies['organizer_email'] = person_email
         cookies['city_id'] = str(organizer_basic_info['city_id'])
         cookies['organizer_image_path'] = organizer_basic_info['image_path']
 
+        cookies['organizer_role'] = 'true'
+        cookies['user_role'] = 'false'
+
         cookies['apptivty_authenticated'] = 'true'
 
-        cookies.save()
-        st.rerun()
+    elif user_api.validate_user(user_email=person_email, user_password=person_password):
+
+        user_basic_info: dict = user_api.get_user_basic_info(person_email)
+
+        print(user_basic_info)
+
+        cookies['user_id'] = str(user_basic_info['id'])
+        cookies['user_name'] = user_basic_info['name']
+        cookies['user_email'] = person_email
+        cookies['user_city_id'] = str(user_basic_info['city_id'])
+        cookies['user_notification_distance'] = str(user_basic_info['notification_distance'])
+        cookies['user_categories'] = json.dumps(user_basic_info['categories'])
+
+        cookies['user_role'] = 'true'
+        cookies['organizer_role'] = 'false'
+
+        cookies['apptivty_authenticated'] = 'true'
+
+    cookies.save()
+    st.rerun()
 
 
 def login():
-    # set_background_image()
-
-    cities: list = city_api.get_cities()
-
-    cities_options = {city["name"]: city["id"] for city in cities}
+    if st.button("Registrate"):
+        st.switch_page("pages/registry.py")
 
     st.image("images/logotipo_apptivity.png")
 
-    col_register, _, col_login = st.columns([3, 1, 3])
+    _, col, _ = st.columns([1, 3, 1])
 
-    with col_register:
-        with st.form(key="register_form", clear_on_submit=True):
-            st.subheader("Registrate")
-            name = st.text_input("Nombre", value="")
-            city_selected = st.selectbox("Municipio", cities_options.keys())
-            city_id = cities_options[city_selected]
-            description = st.text_area("Descripción", value="")
-            email = st.text_input("Correo Electrónico", value="")
-            password = st.text_input("Contraseña", type='password')
-            confirm_password = st.text_input("Repite contraseña", type='password')
-            phone = st.text_input("Teléfono", value="")
-            uploaded_file = st.file_uploader("Selecciona una imagen", type=["jpg", "jpeg", "png"])
-
-            # todo validate email
-
-            if password != confirm_password:
-                st.warning("Las contraseñas no coinciden")
-                st.stop()
-
-            if uploaded_file is not None:
-                image_path = save_image(uploaded_file)
-
-            hashed_password = hash_password(password)
-
-            if st.form_submit_button("Registrarse"):
-                data = {
-                    "name": name,
-                    "city_id": city_id,
-                    "description": description,
-                    "email": email,
-                    "phone": phone,
-                    "password": hashed_password,
-                    "image_path": image_path
-                }
-
-                response = organizer_api.create_organizer(data)
-
-                if response.status_code == 201:
-                    st.success("Te has registrado correctamente")
-                else:
-                    st.error("Ocurrió un error. Intentelo de nuevo mas tarde")
-
-    with col_login:
+    with col:
         with st.form(key="login_form"):
             st.subheader("Accede")
-            organizer_login_email = st.text_input("Email:")
-            organizer_login_password = st.text_input("Contraseña")
+            person_login_email = st.text_input("Email:")
+            person_login_password = st.text_input("Contraseña")
 
             if st.form_submit_button("Acceder"):
-                check_password(organizer_email=organizer_login_email, organizer_password=organizer_login_password)
+                if not person_login_email and not person_login_password:
+                    st.warning("Campos insuficientes")
+                    st.stop()
+                check_password(person_email=person_login_email, person_password=person_login_password)
 
 
 def authenticated_menu():
+
     st.sidebar.image("images/logotipo_apptivity2.png")
     for _ in range(2):
         st.sidebar.text('')
-    st.sidebar.page_link("app.py", label="🏠 Inicio")
-    st.sidebar.page_link("pages/create_activity.py", label="📝 Crear actividad")
-    st.sidebar.page_link("pages/show_next_activities.py", label="📅  Ver próximas actividades")
-    st.sidebar.page_link("pages/show_activities.py", label="📄 Ver todas las actividades")
-    st.sidebar.page_link("pages/statistics.py", label=" 📊 Estadisticas")
+
+    if cookies['organizer_role'] == 'true':
+
+        st.sidebar.page_link("app.py", label="🏠 Inicio")
+        st.sidebar.page_link("pages/create_activity.py", label="📝 Crear actividad")
+        st.sidebar.page_link("pages/show_next_activities.py", label="📅  Ver próximas actividades")
+        st.sidebar.page_link("pages/show_activities.py", label="📄 Ver todas las actividades")
+        st.sidebar.page_link("pages/statistics.py", label=" 📊 Estadisticas")
+
+    elif cookies['user_role'] == 'true':
+
+        st.sidebar.page_link("app.py", label="🏠 Inicio")
+        st.sidebar.page_link("pages/user_show_activities.py", label="📄 Ver todas las actividades")
+        st.sidebar.page_link("pages/user_statistics.py", label=" 📊 Estadisticas")
+        st.sidebar.page_link("pages/user_settings.py", label="⚙ ️Ajustes")
+
     st.sidebar.markdown('---')
     st.sidebar.page_link("pages/logout.py", label="Logout")
 

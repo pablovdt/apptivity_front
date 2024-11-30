@@ -17,6 +17,10 @@ from menu import check_authenticated
 
 check_authenticated()
 
+from auth import cookies
+if cookies['organizer_role'] != 'true':
+    st.stop()
+
 if 'activity_to_repeat' not in st.session_state:
     st.session_state['activity_to_repeat'] = None
 

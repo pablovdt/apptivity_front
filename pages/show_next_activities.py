@@ -18,6 +18,11 @@ from auth import cookies
 from menu import check_authenticated
 
 check_authenticated()
+
+from auth import cookies
+if cookies['organizer_role'] != 'true':
+    st.stop()
+
 st.subheader('Filtros:')
 col1, col2, col3 = st.columns([2, 2, 2])
 with col1:

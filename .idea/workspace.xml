@@ -4,9 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3455f86-bac7-44eb-950e-bd75bfa8748c" name="Changes" comment="feat: improving...ad statistics...">
+    <list default="true" id="e3455f86-bac7-44eb-950e-bd75bfa8748c" name="Changes" comment="fix: import activity_api">
+      <change afterPath="$PROJECT_DIR$/api/user_api.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/organizer_home.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/registry.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/user_home.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/user_settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/user_show_activities.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/user_statistics.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/organizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/organizer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/create_activity.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/create_activity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/show_activities.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/show_activities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/show_next_activities.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/show_next_activities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/statistics.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/statistics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/update_activity.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/update_activity.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +137,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732886754086</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fix: import activity_api">
+      <option name="closed" value="true" />
+      <created>1732919334416</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1732919334416</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -131,6 +153,7 @@
     <MESSAGE value="feat: add update and repeat activity" />
     <MESSAGE value="feat: add organizer images and location in place or city" />
     <MESSAGE value="feat: improving...ad statistics..." />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: improving...ad statistics..." />
+    <MESSAGE value="fix: import activity_api" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: import activity_api" />
   </component>
 </project>

@@ -17,6 +17,10 @@ from menu import check_authenticated
 
 check_authenticated()
 
+from auth import cookies
+if cookies['organizer_role'] != 'true':
+    st.stop()
+
 st.title("Formulario de Actividad")
 
 data = activity_input_form()
