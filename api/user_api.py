@@ -59,8 +59,16 @@ class UserApi(Api):
 
         response = requests.get(url=f"{self.url}{self.endpoint_base}{user_id}/activities")
 
-        print(f'lamada api con ususario {user_id}')
-        print(response.json())
         return response.json()
+
+    def update_assistance(self, user_id: int, activity_id: int, assistance):
+
+        # users/10/activities/10/assistance?assistance=false
+
+        response = requests.patch(url=f"{self.url}{self.endpoint_base}{user_id}/activities/{activity_id}/{assistance}")
+
+        if response.status_code == 200:
+
+            return True
 
 user_api: UserApi = UserApi()

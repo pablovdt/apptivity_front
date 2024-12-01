@@ -25,7 +25,7 @@ check_authenticated()
 
 st.header(f"Hola {cookies['organizer_name']}")
 
-st.image(cookies['organizer_image_path'])
+
 
 from datetime import datetime, timedelta
 import pytz
@@ -90,6 +90,7 @@ with col1:
 
 with col2:
     with st.container(border=True):
+        st.image(cookies['organizer_image_path'])
         st.subheader("Total")
 
-        st.metric(label="📊 Total de actividades", value=total, delta=None)
+        st.metric(label="📊 Total de actividades creadas", value=total, delta=None)
