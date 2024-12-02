@@ -1,17 +1,19 @@
-import pandas as pd
-import streamlit as st
-from dotenv import load_dotenv
-from datetime import datetime
-from api.activity_api import activiti_api
-from api.category_api import category_api
-from api.place_api import place_api
 
+import streamlit as st
 st.set_page_config(
     page_title="Apptivity - Ver Proximas actividades -",
     page_icon='',
     layout='centered',
     initial_sidebar_state="expanded"
 )
+import pandas as pd
+from dotenv import load_dotenv
+from datetime import datetime
+from api.activity_api import activiti_api
+from api.category_api import category_api
+from api.place_api import place_api
+
+
 
 load_dotenv()
 from auth import cookies
@@ -22,6 +24,8 @@ check_authenticated()
 from auth import cookies
 if cookies['organizer_role'] != 'true':
     st.stop()
+
+st.title('Gestiona actividades futuras')
 
 st.subheader('Filtros:')
 col1, col2, col3 = st.columns([2, 2, 2])
@@ -59,9 +63,13 @@ for i, (index, row) in enumerate(df.iterrows()):
         st.write(f"🏷️ **Categoría:** {category}")
         if row['cancelled']:
             st.write(f"🚫 **CANCELADA !!**")
-        st.write(f"👥 **Número de asistencias:** {row['number_of_assistances']}")
-        st.write(f"📤 **Número de envios:** {row['number_of_shipments']}")
-        st.write(f"🗑️ **Número de descartes:** {row['number_of_discards']}")
+        colm1, colm2, colm3 = st.columns([2, 2, 2])
+        with colm1:
+            st.metric(label=f"👥 **Número de asistencias:**",value=f"{row['number_of_assistances']}")
+        with colm2:
+            st.metric(label=f"📤 **Número de envios:** ", value=f"{row['number_of_shipments']}")
+        with colm3:
+            st.metric(label=f"🗑️ **Número de descartes:**", value=f" {row['number_of_discards']}")
         st.image(row['image_path'])
 
         col1, _, col2 = st.columns([2, 2, 2])

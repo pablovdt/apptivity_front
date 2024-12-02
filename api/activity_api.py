@@ -33,10 +33,12 @@ class ActivityApi(Api):
             print(f"Error en la solicitud: {e}")
 
     def get_activities(self, is_date_order_asc: bool = True, date_from: str = None, activity_name: str = None,
-                       place_id: int = None, cancelled: bool = False, organizer_id=None):
+                       place_id: int = None, cancelled: bool = False, organizer_id=None, order_by_assistance:bool = None, limit:int=None):
 
-        url = f'{self.url}{self.endpoint_base}activities?organizer_id={cookies["organizer_id"]}'
+        url = f'{self.url}{self.endpoint_base}activities?'
         try:
+            if organizer_id:
+                url += f"&organizer_id={cookies['organizer_id']}"
             if date_from:
                 url += f'&date_from={date_from}'
 
@@ -54,6 +56,12 @@ class ActivityApi(Api):
 
             if organizer_id:
                 url += f'&organizer_id={organizer_id}'
+
+            if order_by_assistance:
+                url += '&order_by_assistance=true'
+
+            if limit:
+                url += f'&limit={limit}'
 
             response = requests.get(url=url)
 

@@ -21,7 +21,17 @@ class UserApi(Api):
         except requests.exceptions.RequestException as e:
             print(f"Error en la solicitud: {e}")
 
-    def update_user(self, user_id, data:dict):
+    def add_user_activity(self, user_id: int, activity_id: int):
+        try:
+            response = requests.post(
+                url=f'{self.url}{self.endpoint_base}add_user_activity?user_id={user_id}&activity_id={activity_id}'
+            )
+
+            return response
+        except requests.exceptions.RequestException as e:
+            print(f"Error en la solicitud: {e}")
+
+    def update_user(self, user_id, data: dict):
         try:
             response = requests.patch(
                 url=f'{self.url}{self.endpoint_base}user/{user_id}',
@@ -54,21 +64,54 @@ class UserApi(Api):
 
         return user_basic_info
 
+    def get_user_activities(self, user_id: int, all: bool, date_from: str = None, is_date_order_asc: bool = None):
 
-    def get_user_activities(self, user_id: int):
+        url = f"{self.url}{self.endpoint_base}{user_id}/activities/?all={all}"
 
-        response = requests.get(url=f"{self.url}{self.endpoint_base}{user_id}/activities")
+        if date_from:
+            url += f'&date_from={date_from}'
+
+        if is_date_order_asc:
+            url += f"&is_date_order_asc=true"
+        else:
+            url += f"&is_date_order_asc=false"
+
+        response = requests.get(url=url)
 
         return response.json()
 
     def update_assistance(self, user_id: int, activity_id: int, assistance):
+        update_assistance_url = f"{self.url}{self.endpoint_base}{user_id}/activities/{activity_id}"
 
-        # users/10/activities/10/assistance?assistance=false
+        params = {}
+        if assistance is not None:
+            params['assistance'] = assistance
 
-        response = requests.patch(url=f"{self.url}{self.endpoint_base}{user_id}/activities/{activity_id}/{assistance}")
+        response = requests.patch(url=update_assistance_url, params=params)
+
+        if response.status_code == 200:
+            return True
+        else:
+            response.raise_for_status()
+
+    def get_more_activities(self, user_id: int, user_categories):
+
+        user_categories_p = json.loads(user_categories)
+
+        user_categories_ids = [cat_id['id'] for cat_id in user_categories_p]
+
+        url = f"{self.url}{self.endpoint_base}more_activities?user_id={user_id}"
+
+        for category_id in user_categories_ids:
+            url += f"&categories_ids={category_id}"
+
+        response = requests.get(url=url)
 
         if response.status_code == 200:
 
-            return True
+            return response.json()
+        else:
+            return None
+
 
 user_api: UserApi = UserApi()

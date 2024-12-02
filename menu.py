@@ -82,12 +82,16 @@ def authenticated_menu():
         st.sidebar.page_link("pages/create_activity.py", label="📝 Crear actividad")
         st.sidebar.page_link("pages/show_next_activities.py", label="📅  Ver próximas actividades")
         st.sidebar.page_link("pages/show_activities.py", label="📄 Ver todas las actividades")
+        st.sidebar.page_link("pages/organizer_activities_top_ranking.py", label="🏆 Actividades Top Ranking")
+        st.sidebar.page_link("pages/organizer_map.py", label="📍Mapa de Actividades")
         st.sidebar.page_link("pages/statistics.py", label=" 📊 Estadisticas")
 
     elif cookies['user_role'] == 'true':
 
         st.sidebar.page_link("app.py", label="🏠 Inicio")
-        st.sidebar.page_link("pages/user_show_activities.py", label="📄 Ver todas las actividades")
+        st.sidebar.page_link("pages/user_show_activities.py", label="📄 Ver todas tus actividades")
+        st.sidebar.page_link("pages/user_activities_by_categories.py", label="✚ Ver más actividades")
+        st.sidebar.page_link("pages/user_activities_top_ranking.py", label="🏆 Actividades Top Ranking")
         st.sidebar.page_link("pages/user_statistics.py", label=" 📊 Estadisticas")
         st.sidebar.page_link("pages/user_settings.py", label="⚙ ️Ajustes")
 

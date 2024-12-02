@@ -23,8 +23,10 @@ from menu import check_authenticated
 check_authenticated()
 
 
-st.header(f"Hola {cookies['organizer_name']}")
+st.title(f"Hola {cookies['organizer_name']}")
 
+for _ in range(5):
+    st.write("")
 
 
 from datetime import datetime, timedelta
@@ -94,3 +96,30 @@ with col2:
         st.subheader("Total")
 
         st.metric(label="📊 Total de actividades creadas", value=total, delta=None)
+
+
+
+
+st.header("Actividades por mes")
+
+from datetime import datetime
+
+current_year = datetime.now().year
+
+year = st.selectbox('Selecciona un año', [2020, 2021, 2022, 2023, 2024, 2025],
+                    index=[2020, 2021, 2022, 2023, 2024, 2025].index(current_year))
+
+activities_by_month = activiti_api.get_activities_by_month(year=year)
+
+df = pd.DataFrame(list(activities_by_month.items()), columns=['Mes', 'Actividades'])
+
+month_order = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+               'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+
+df['Mes'] = pd.Categorical(df['Mes'], categories=month_order, ordered=True)
+
+df = df.sort_values('Mes')
+
+for _ in range(5):
+    st.write('')
+st.line_chart(df.set_index('Mes')['Actividades'])

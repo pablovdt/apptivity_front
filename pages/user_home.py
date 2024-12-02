@@ -16,18 +16,19 @@ from api.category_api import category_api
 from api.place_api import place_api
 from api.user_api import user_api
 
-
 load_dotenv()
 from auth import cookies
+
 check_authenticated()
 
 st.header(f"{cookies['user_name']}, tus actividades:")
 
-user_activities = user_api.get_user_activities(cookies['user_id'])
+user_activities = user_api.get_user_activities(cookies['user_id'], all=False,
+                                               date_from=datetime.now().strftime("%Y-%m-%d"))
+
 
 @st.dialog("Información")
 def show_activity_details(item):
-
     place = place_api.get_place_by_id(item["place_id"])
     if not place['location_url']:
         st.write(f'📍 **Lugar**: {place["name"]}')
@@ -50,24 +51,24 @@ def show_activity_details(item):
 
     st.image(item['image_path'], use_column_width=True)
 
-    col_button_1, col_button_2, col_button_3= st.columns([2, 2,2])
+    col_button_1, col_button_2, col_button_3 = st.columns([2, 2, 2])
 
     with col_button_1:
         if st.button("Asistiré"):
-            if user_api.update_assistance(user_id = cookies['user_id'], activity_id=item['id'], assistance=True):
+            if user_api.update_assistance(user_id=cookies['user_id'], activity_id=item['id'], assistance=True):
                 st.rerun()
 
     with col_button_2:
 
         if st.button("No lo sé"):
-            pass
-            # if user_api.update_assistance(user_id=cookies['user_id'], activity_id=item['id'], assistance=None):
-            #     st.rerun()
+            if user_api.update_assistance(user_id=cookies['user_id'], activity_id=item['id'], assistance=None):
+                st.rerun()
 
     with col_button_3:
         if st.button("No Asistiré"):
             if user_api.update_assistance(user_id=cookies['user_id'], activity_id=item['id'], assistance=False):
                 st.rerun()
+
 
 if user_activities:
     df = pd.DataFrame(user_activities)
@@ -107,7 +108,6 @@ if user_activities:
                     st.image(row['image_path'], use_column_width=True)
 
                 if st.button(f"Ver actividad - {row['name']}"):
-
                     show_activity_details(row)
 
 
