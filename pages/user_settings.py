@@ -46,7 +46,7 @@ if categories:
 else:
     st.info("No tienes categorías favoritas aún.")
 
-for _ in range(6):
+for _ in range(3):
     st.write("")
 
 st.subheader("Añade más categorías")
@@ -63,7 +63,6 @@ if st.button("Añadir categorias seleccionadas"):
 
     merged_categories = list(set(categories_ids + user_category_ids))
 
-
     response = user_api.update_user(user_id=cookies['user_id'], data={
         "categories": merged_categories
     })
@@ -72,6 +71,32 @@ if st.button("Añadir categorias seleccionadas"):
 
         user_basic_info: dict = user_api.get_user_basic_info(cookies['user_email'])
         cookies['user_categories'] = json.dumps(user_basic_info['categories'])
+
+        cookies.save()
+        st.rerun()
+
+    else:
+        st.error("Ocurrió un error. Intentelo de nuevo mas tarde")
+
+for _ in range(6):
+    st.write("")
+
+st.header(f"Distancia de Notificación - {cookies['user_notification_distance']} Km -")
+st.write('Ajusta para enterarte de las actividades más cercanas')
+
+new_notification_distance = st.slider("Distancia - Km -", min_value=10, max_value=100, step=1, value=int(cookies['user_notification_distance']))
+
+if st.button("Editar distancia de notificación",
+             help=f'Se te mostrarán las actividades en un radio de {new_notification_distance} km respecto a tu municipio.'):
+
+    response = user_api.update_user(user_id=cookies['user_id'], data={
+        "notification_distance": new_notification_distance
+    })
+
+    if response.status_code == 200:
+
+        user_basic_info: dict = user_api.get_user_basic_info(cookies['user_email'])
+        cookies['user_notification_distance'] = str(user_basic_info['notification_distance'])
 
         cookies.save()
         st.rerun()

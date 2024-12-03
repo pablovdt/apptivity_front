@@ -1,14 +1,18 @@
 import streamlit as st
+
 st.set_page_config(
     page_title="Apptivity - Mapa-",
     page_icon='',
     layout='centered',
     initial_sidebar_state="expanded"
 )
+from collections import Counter
+from api.organizer import organizer_api
+
+import numpy as np
 from dotenv import load_dotenv
 from menu import check_authenticated
 import pandas as pd
-import numpy as np
 import pydeck as pdk
 
 load_dotenv()
@@ -20,26 +24,27 @@ if cookies['organizer_role'] != 'true':
     st.stop()
 
 st.title("Consulta de donde procede tu turismo")
+st.write("Basado en los municipios de los usuarios que asisten a tus actividades")
 
-# Coordenadas de la ubicación central (puedes ajustarlas a tu ciudad o destino turístico)
-latitude = 42.36   # Latitud de la ciudad de ejemplo (puedes cambiarla por la ciudad o lugar deseado)
-longitude = -2.86  # Longitud de la ciudad de ejemplo (puedes cambiarla por la ciudad o lugar deseado)
+user_coordinates = organizer_api.get_user_coordinates(cookies['organizer_id'])
 
-# Aquí debes pasar los datos de latitud y longitud de las ubicaciones de los turistas
-# Ejemplo de datos que puedes pasar:
+# Convertir las coordenadas en un DataFrame
+latitudes = [coord['latitude'] for coord in user_coordinates]
+longitudes = [coord['longitude'] for coord in user_coordinates]
+
 tourism_data = pd.DataFrame({
-    "lat": [40.7128, 51.5074, 48.8566, 34.0522, 35.6895],  # Latitudes de origen de los turistas
-    "lon": [-74.0060, -0.1278, 2.3522, -118.2437, 139.6917],  # Longitudes de origen de los turistas
+    "lat": latitudes,
+    "lon": longitudes
 })
 
-# Mapa de la ciudad con los puntos de turismo
+# Visualización del mapa
 st.pydeck_chart(
     pdk.Deck(
-        map_style=None,
+        map_style="mapbox://styles/mapbox/light-v9",  # Estilo del mapa
         initial_view_state=pdk.ViewState(
-            latitude=latitude,
-            longitude=longitude,
-            zoom=11,
+            latitude=float(cookies['organizer_latitude']),
+            longitude=float(cookies['organizer_longitude']),
+            zoom=9,
             pitch=50,
         ),
         layers=[
@@ -57,9 +62,28 @@ st.pydeck_chart(
                 "ScatterplotLayer",
                 data=tourism_data,
                 get_position="[lon, lat]",
-                get_color="[200, 30, 0, 160]",
+                get_color="[130, 178, 154, 160]",  # 82b29a
                 get_radius=200,
             ),
         ],
     )
 )
+
+
+city_names = [user['city_name'] for user in user_coordinates]
+
+city_counts = Counter(city_names)
+
+data = [{'Municipio': city, 'Nº de Usuarios': count} for city, count in city_counts.items()]
+
+df = pd.DataFrame(data)
+
+df = df.sort_values(by='Nº de Usuarios', ascending=False)
+
+df = df.reset_index(drop=True)
+
+for _ in range(5):
+    st.write("")
+
+
+st.dataframe(df, use_container_width=True, hide_index=True)  # Aquí usamos hide_index=True

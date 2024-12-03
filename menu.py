@@ -21,6 +21,8 @@ def check_password(person_email: str, person_password: str):
         cookies['organizer_email'] = person_email
         cookies['city_id'] = str(organizer_basic_info['city_id'])
         cookies['organizer_image_path'] = organizer_basic_info['image_path']
+        cookies['organizer_latitude'] = str(organizer_basic_info['city_latitude'])
+        cookies['organizer_longitude'] = str(organizer_basic_info['city_longitude'])
 
         cookies['organizer_role'] = 'true'
         cookies['user_role'] = 'false'

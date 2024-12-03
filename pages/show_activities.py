@@ -13,7 +13,7 @@ from api.category_api import category_api
 from api.place_api import place_api
 
 
-
+import pytz
 load_dotenv()
 from auth import cookies
 from menu import check_authenticated
@@ -23,6 +23,8 @@ check_authenticated()
 from auth import cookies
 if cookies['organizer_role'] != 'true':
     st.stop()
+
+now = datetime.now(pytz.timezone("Europe/Madrid"))
 
 if 'activity_to_repeat' not in st.session_state:
     st.session_state['activity_to_repeat'] = None
@@ -82,11 +84,12 @@ for i, (index, row) in enumerate(df.iterrows()):
 
         col1, _, col2 = st.columns([2, 2, 2])
 
-        with col1:
-            if st.button("Editar Actividad", key=f'edit{i}'):
-                st.session_state['activity_to_repeat'] = row
-                st.switch_page('pages/update_activity.py')
-        with col2:
-            if st.button("Repetir Actividad", key=f'repeat{i}'):
-                st.session_state['activity_to_repeat'] = row
-                st.switch_page('pages/create_activity.py')
+        if date_obj > now:
+            with col1:
+                if st.button("Editar Actividad", key=f'edit{i}'):
+                    st.session_state['activity_to_repeat'] = row
+                    st.switch_page('pages/update_activity.py')
+            with col2:
+                if st.button("Repetir Actividad", key=f'repeat{i}'):
+                    st.session_state['activity_to_repeat'] = row
+                    st.switch_page('pages/create_activity.py')

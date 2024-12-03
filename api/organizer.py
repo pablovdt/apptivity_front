@@ -35,12 +35,22 @@ class OrganizerApi(Api):
                 return False
         else:
             return False
+
     def get_organizer_basic_info(self, organizer_email):
         response = requests.get(url=f"{self.url}{self.endpoint_base}organizer_by_email/{organizer_email}")
 
         organizer_basic_info = response.json()
 
         return organizer_basic_info
+
+    def get_user_coordinates(self, organizer_id: int):
+
+        response = requests.get(url=f"{self.url}{self.endpoint_base}user_coordinates/{organizer_id}")
+
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return None
 
 
 organizer_api: OrganizerApi = OrganizerApi()

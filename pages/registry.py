@@ -63,7 +63,7 @@ with col1:
                 "password": hashed_password,
                 "category_ids": categories_ids,
                 "settings": "",
-                "notification_distance": 50
+                "notification_distance": 20
             }
 
             response = user_api.create_user(data)
