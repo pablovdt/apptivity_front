@@ -19,6 +19,10 @@ from api.user_api import user_api
 load_dotenv()
 from auth import cookies
 
+if cookies['user_role'] != 'true':
+    st.stop()
+
+
 check_authenticated()
 
 st.header(f"{cookies['user_name']}, tus actividades:")

@@ -31,6 +31,18 @@ class UserApi(Api):
         except requests.exceptions.RequestException as e:
             print(f"Error en la solicitud: {e}")
 
+    def organizer_subscribe(self, organizer_id: int, user_id: int):
+
+        try:
+            requests.post(
+                url=f'{self.url}{self.endpoint_base}add_user_organizer?user_id={user_id}&organizer_id={organizer_id}'
+            )
+
+            return True
+        except requests.exceptions.RequestException as e:
+            print(f"Error en la solicitud: {e}")
+            return False
+
     def update_user(self, user_id, data: dict):
         try:
             response = requests.patch(
@@ -113,5 +125,13 @@ class UserApi(Api):
         else:
             return None
 
+
+    def get_subscribe_organizers(self, user_id: int):
+
+        url = f"{self.url}{self.endpoint_base}{user_id}/organizers/"
+
+        response = requests.get(url=url)
+
+        return response.json()
 
 user_api: UserApi = UserApi()

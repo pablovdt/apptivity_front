@@ -94,6 +94,7 @@ def authenticated_menu():
         st.sidebar.page_link("pages/user_show_activities.py", label="📄 Ver todas tus actividades")
         st.sidebar.page_link("pages/user_activities_by_categories.py", label="✚ Ver más actividades")
         st.sidebar.page_link("pages/user_activities_top_ranking.py", label="🏆 Actividades Top Ranking")
+        st.sidebar.page_link("pages/user_organizers.py", label="🏛️ Organizadores")
         st.sidebar.page_link("pages/user_statistics.py", label=" 📊 Estadisticas")
         st.sidebar.page_link("pages/user_settings.py", label="⚙ ️Ajustes")
 

@@ -93,11 +93,11 @@ if user_activities:
 
                 if datetime.fromisoformat(row['date']) < now:
                     st.markdown(f"<h2 style='color: grey'>{row['name']}</h2>", unsafe_allow_html=True)
-                elif row['assistance']:
+                elif row['possible_assistance']:
                     st.markdown(f"<h2 style='color: #82b29a'>{row['name']}</h2>", unsafe_allow_html=True)
-                elif row['assistance'] is None:
+                elif row['possible_assistance'] is None:
                     st.markdown(f"<h2>{row['name']}</h2>", unsafe_allow_html=True)
-                elif row['assistance'] is False:
+                elif row['possible_assistance'] is False:
                     st.markdown(f"<h2 style='color: #d66060'>{row['name']}</h2>", unsafe_allow_html=True)
 
                 place = place_api.get_place_by_id(row["place_id"])

@@ -8,6 +8,22 @@ from utils import verify_hash_password
 class OrganizerApi(Api):
     endpoint_base = 'organizers/'
 
+    def get_organizers(self, name: str = None, city_id: int = None):
+
+        url = f"{self.url}{self.endpoint_base}organizers/"
+
+        if name:
+            url += f"?name={name}"
+        if city_id:
+            url += f"?city_id={city_id}"
+
+        try:
+            response = requests.get(url=url)
+            return response.json()
+
+        except requests.exceptions.RequestException as e:
+            print(f"Error en la solicitud: {e}")
+
     def create_organizer(self, organizer: dict):
 
         try:
