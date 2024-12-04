@@ -34,7 +34,7 @@ import pytz
 
 from api.activity_api import activiti_api
 
-activities = activiti_api.get_activities()
+activities = activiti_api.get_activities(organizer_id=cookies['organizer_id'])
 
 @st.dialog("Información")
 def show_activity_details(i, row):

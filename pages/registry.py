@@ -97,7 +97,8 @@ with col3:
 
         if uploaded_file is not None:
             image_path = save_image(uploaded_file)
-
+        else:
+            image_path= ''
         hashed_password = hash_password(password)
 
         if st.form_submit_button("Registrarse"):

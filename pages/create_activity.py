@@ -1,15 +1,16 @@
 import streamlit as st
-from dotenv import load_dotenv
-from shared.activity_input_form import activity_input_form
-
-from api.activity_api import activiti_api
-
 st.set_page_config(
     page_title="Apptivity - Crear Actividad-",
     page_icon='',
     layout='centered',
     initial_sidebar_state="expanded"
 )
+
+from dotenv import load_dotenv
+from shared.activity_input_form import activity_input_form
+
+from api.activity_api import activiti_api
+
 
 load_dotenv()
 

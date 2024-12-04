@@ -37,7 +37,7 @@ def activity_input_form():
             "image_path": ""
         }
 
-    places: list = place_api.get_places_by_id(cookies['city_id'])
+    places: list = place_api.get_places_by_id(cookies['organizer_city_id'])
     places_options = {place["name"]: place["id"] for place in places}
 
     categories: list = category_api.get_categories()

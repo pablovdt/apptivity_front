@@ -38,7 +38,7 @@ class ActivityApi(Api):
         url = f'{self.url}{self.endpoint_base}activities?'
         try:
             if organizer_id:
-                url += f"&organizer_id={cookies['organizer_id']}"
+                url += f"&organizer_id={organizer_id}"
             if date_from:
                 url += f'&date_from={date_from}'
 
@@ -70,9 +70,9 @@ class ActivityApi(Api):
         except requests.exceptions.RequestException as e:
             print(f"Error en la solicitud: {e}")
 
-    def get_activities_by_month(self, year: int):
+    def get_activities_by_month(self, organizer_id: int, year: int):
 
-        url = f'{self.url}{self.endpoint_base}activities_by_month/?organizer_id={cookies["organizer_id"]}&year={year}'
+        url = f'{self.url}{self.endpoint_base}activities_by_month/?organizer_id={organizer_id}&year={year}'
         try:
             response = requests.get(url=url)
 

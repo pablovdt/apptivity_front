@@ -35,7 +35,7 @@ current_year = datetime.now().year
 year = st.selectbox('Selecciona un año', [2020, 2021, 2022, 2023, 2024, 2025],
                     index=[2020, 2021, 2022, 2023, 2024, 2025].index(current_year))
 
-activities_by_month = activiti_api.get_activities_by_month(year=year)
+activities_by_month = activiti_api.get_activities_by_month(organizer_id=cookies['organizer_id'], year=year)
 
 df = pd.DataFrame(list(activities_by_month.items()), columns=['Mes', 'Actividades'])
 
@@ -57,7 +57,7 @@ total_shipments = 0
 total_assistances = 0
 total_possible_assistances = 0
 
-activities = activiti_api.get_activities()
+activities = activiti_api.get_activities(organizer_id=cookies['organizer_id'])
 
 categorias = set()
 
@@ -80,16 +80,22 @@ else:
     porcentaje_cumplimiento = 0.0
 
 
-st.header("Categorías de tus actividades:")
-for categoria in categorias:
-    st.write(categoria)
 
+st.header("Categorías de tus actividades:")
+if activities:
+    for categoria in categorias:
+        st.write(categoria)
+else:
+    st.info("Cuando crees actividades aqui podrás ver sus categorías")
 
 st.header("Porcentajes de asistencias")
+if activities:
+    col1, col2 = st.columns([2, 2])
 
-col1, col2 = st.columns([2, 2])
+    with col1:
+        st.metric(label="Porcentaje de asistencia", value=f"{porcentaje_asistencia:.1f}%", delta=None)
+    with col2:
+        st.metric(label="Porcentaje de cumplimiento", value=f"{porcentaje_cumplimiento:.1f}%", delta=None)
 
-with col1:
-    st.metric(label="Porcentaje de asistencia", value=f"{porcentaje_asistencia:.1f}%", delta=None)
-with col2:
-    st.metric(label="Porcentaje de cumplimiento", value=f"{porcentaje_cumplimiento:.1f}%", delta=None)
+else:
+    st.info("Cuando crees actividades aqui podrás ver porcentajes de asistencia")

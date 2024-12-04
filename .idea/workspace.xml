@@ -4,16 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3455f86-bac7-44eb-950e-bd75bfa8748c" name="Changes" comment="feat: improving styles">
-      <change afterPath="$PROJECT_DIR$/pages/user_organizers.py" afterDir="false" />
+    <list default="true" id="e3455f86-bac7-44eb-950e-bd75bfa8748c" name="Changes" comment="feat: add user subscribe organizer">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/organizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/organizer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/user_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/user_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/activity_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/activity_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/create_activity.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/create_activity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/logout.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/logout.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/organizer_home.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/organizer_home.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/organizer_map.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/organizer_map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/registry.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/registry.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/show_activities.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/show_activities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/show_next_activities.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/show_next_activities.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/statistics.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/statistics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/user_home.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user_home.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/user_show_activities.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user_show_activities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/activity_input_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/shared/activity_input_form.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +181,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733313331903</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="feat: add user subscribe organizer">
+      <option name="closed" value="true" />
+      <created>1733324388126</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1733324388126</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -191,6 +202,7 @@
     <MESSAGE value="feat: improving" />
     <MESSAGE value="feat: improving, add hansine algorithm and coordinates system" />
     <MESSAGE value="feat: improving styles" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: improving styles" />
+    <MESSAGE value="feat: add user subscribe organizer" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add user subscribe organizer" />
   </component>
 </project>
