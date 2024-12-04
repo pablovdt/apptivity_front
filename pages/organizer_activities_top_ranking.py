@@ -17,7 +17,6 @@ from api.place_api import place_api
 from api.user_api import user_api
 from api.city_api import city_api
 
-
 from dotenv import load_dotenv
 import pandas as pd
 from datetime import datetime
@@ -33,40 +32,93 @@ from auth import cookies
 if cookies['organizer_role'] != 'true':
     st.stop()
 
-activities = activiti_api.get_activities(organizer_id=cookies['organizer_id'],date_from=datetime.now().strftime("%Y-%m-%d"), cancelled=False,
-                                         order_by_assistance=True)
-if activities:
+organizer_activities = activiti_api.get_activities(organizer_id=cookies['organizer_id'],
+                                                   date_from=datetime.now().strftime("%Y-%m-%d"), cancelled=False,
+                                                   order_by_assistance=True)
 
-    st.title('🔥 Ranking de Eventos Populares 🔥')
+general_activities = activiti_api.get_activities(date_from=datetime.now().strftime("%Y-%m-%d"), cancelled=False,
+                                                 order_by_assistance=True, limit=10)
 
-    st.markdown("""
-    Aquí tienes tus 10 Actividades más populares según las asistencias registradas.
-    ¡Descubre las actividades que están atrayendo a más personas!
-    """)
+st.title('🔥 Ranking de Eventos Populares 🔥')
 
-    st.markdown('#### Actividades más Populares por Asistencias:')
+organizer_tab, general_tab = st.tabs([f"{cookies['organizer_name']} top ranking", "General Top Ranking"])
 
-    df = pd.DataFrame(activities)
+with organizer_tab:
+    for _ in range(3):
+        st.write("")
 
-    for i, (index, row) in enumerate(df.iterrows()):
+    if organizer_activities:
 
-        with st.container(border=True):
+        st.subheader("Tus Top Ranking")
 
-            st.markdown(f"<h2>{row['name']}</h2>", unsafe_allow_html=True)
+        st.markdown("""
+        Aquí tienes tus 10 Actividades más populares según las asistencias registradas.
+        ¡Descubre las actividades que están atrayendo a más personas!
+        """)
 
-            place = place_api.get_place_by_id(row["place_id"])
-            place_city_id = place["city_id"]
+        st.markdown('#### Actividades más Populares por Asistencias:')
 
-            city_name = city_api.get_city_by_id(place_city_id)['name']
+        df = pd.DataFrame(organizer_activities)
 
-            st.write(city_name)
+        for i, (index, row) in enumerate(df.iterrows()):
 
-            date_obj = datetime.fromisoformat(row['date'])
-            st.write(f"📅 {date_obj.strftime('%d/%m/%Y')} 🕒 {date_obj.strftime('%H:%M')}")
+            with st.container(border=True):
 
-            st.write(f"💰 {row['price']} €")
+                st.markdown(f"<h2>{row['name']}</h2>", unsafe_allow_html=True)
 
-            if row.get('image_path'):
-                st.image(row['image_path'], use_column_width=True)
+                place = place_api.get_place_by_id(row["place_id"])
+                place_city_id = place["city_id"]
 
+                city_name = city_api.get_city_by_id(place_city_id)['name']
 
+                st.write(city_name)
+
+                date_obj = datetime.fromisoformat(row['date'])
+                st.write(f"📅 {date_obj.strftime('%d/%m/%Y')} 🕒 {date_obj.strftime('%H:%M')}")
+
+                st.write(f"💰 {row['price']} €")
+
+                if row.get('image_path'):
+                    st.image(row['image_path'], use_column_width=True)
+
+with general_tab:
+    for _ in range(3):
+        st.write("")
+
+    if general_activities:
+
+        st.subheader("Top Ranking de todo Apptivity")
+
+        st.markdown("""
+        Aquí tienes las 10 Actividades más populares según las asistencias registradas.
+        ¡Descubre los eventos que están atrayendo a más personas!
+        """)
+
+        st.markdown('#### Actividades más Populares por Asistencias:')
+
+        df = pd.DataFrame(general_activities)
+
+        for i, (index, row) in enumerate(df.iterrows()):
+
+            with st.container(border=True):
+
+                st.markdown(f"<h2>{row['name']}</h2>", unsafe_allow_html=True)
+
+                place = place_api.get_place_by_id(row["place_id"])
+                place_city_id = place["city_id"]
+
+                city_name = city_api.get_city_by_id(place_city_id)['name']
+
+                st.write(city_name)
+
+                date_obj = datetime.fromisoformat(row['date'])
+                st.write(f"📅 {date_obj.strftime('%d/%m/%Y')} 🕒 {date_obj.strftime('%H:%M')}")
+
+                st.write(f"💰 {row['price']} €")
+
+                if row.get('image_path'):
+                    st.image(row['image_path'], use_column_width=True)
+
+                if st.button(f"Añadir actividad a Inicio", key=row['id']):
+                    user_api.add_user_activity(user_id=cookies['user_id'], activity_id=row['id'])
+                    st.rerun()

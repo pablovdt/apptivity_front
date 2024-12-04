@@ -61,18 +61,18 @@ def show_activity_details(item):
 
         with col_button_1:
             if st.button("Asistiré"):
-                if user_api.update_assistance(user_id = cookies['user_id'], activity_id=item['id'], assistance=True):
+                if user_api.update_possible_assistance(user_id = cookies['user_id'], activity_id=item['id'], possible_assistance=True):
                     st.rerun()
 
         with col_button_2:
 
             if st.button("No lo sé"):
-                if user_api.update_assistance(user_id=cookies['user_id'], activity_id=item['id'], assistance=None):
+                if user_api.update_possible_assistance(user_id=cookies['user_id'], activity_id=item['id'], possible_assistance=None):
                     st.rerun()
 
         with col_button_3:
             if st.button("No Asistiré"):
-                if user_api.update_assistance(user_id=cookies['user_id'], activity_id=item['id'], assistance=False):
+                if user_api.update_possible_assistance(user_id=cookies['user_id'], activity_id=item['id'], possible_assistance=False):
                     st.rerun()
 
 if user_activities:

@@ -80,12 +80,12 @@ class UserApi(Api):
 
         return response.json()
 
-    def update_assistance(self, user_id: int, activity_id: int, assistance):
+    def update_possible_assistance(self, user_id: int, activity_id: int, possible_assistance):
         update_assistance_url = f"{self.url}{self.endpoint_base}{user_id}/activities/{activity_id}"
 
         params = {}
-        if assistance is not None:
-            params['assistance'] = assistance
+        if possible_assistance is not None:
+            params['possible_assistance'] = possible_assistance
 
         response = requests.patch(url=update_assistance_url, params=params)
 

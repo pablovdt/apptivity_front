@@ -91,6 +91,7 @@ def activity_input_form():
                 "image_path": image_path,
                 "category_id": category_id,
                 "cancelled": cancelled,
+                "number_of_possible_assistances": 0,
                 "number_of_assistances": 0,
                 "number_of_shipments": 0,
                 "number_of_discards": 0

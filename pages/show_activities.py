@@ -72,13 +72,36 @@ for i, (index, row) in enumerate(df.iterrows()):
         st.write(f"🏷️ **Categoría:** {category}")
         if row['cancelled']:
             st.write(f"🚫 **CANCELADA !!**")
-        colm1, colm2, colm3 = st.columns([2, 2, 2])
-        with colm1:
-            st.metric(label=f"👥 **Número de asistencias:**",value=f"{row['number_of_assistances']}")
-        with colm2:
-            st.metric(label=f"📤 **Número de envios:** ", value=f"{row['number_of_shipments']}")
-        with colm3:
-            st.metric(label=f"🗑️ **Número de descartes:**", value=f" {row['number_of_discards']}")
+
+        if date_obj < now:
+            if row['number_of_shipments'] > 0:
+                st.write(f"%  **Porcentaje de asistencia:** {(row['number_of_assistances'] / row['number_of_shipments']) * 100} %")
+            else:
+                st.write(f"%  **Porcentaje de asistencia:** 0.0 %")
+
+            if row['number_of_possible_assistances'] > 0:
+                porcentaje = (row['number_of_assistances'] / row['number_of_possible_assistances']) * 100
+                st.write(f"% **Porcentaje de cumplimiento:** {porcentaje:.2f}%")
+            else:
+                st.write(f"% **Porcentaje de cumplimiento:** 0.0 %")
+
+            colm1, colm2, colm3, colm4 = st.columns([2, 2, 2, 2])
+            with colm1:
+                st.metric(label=f"👥 ✅ **Asistencias:**",value=f"{row['number_of_assistances']}")
+            with colm2:
+                st.metric(label=f"👥 **Posibles asistencias:**",value=f"{row['number_of_possible_assistances']}")
+            with colm3:
+                st.metric(label=f"📤 **Envios:** ", value=f"{row['number_of_shipments']}")
+            with colm4:
+                st.metric(label=f"🗑️ **Descartes:**", value=f" {row['number_of_discards']}")
+        else:
+            colm1, colm2, colm3 = st.columns([2, 2, 2])
+            with colm1:
+                st.metric(label=f"👥 **Posibles asistencias:**",value=f"{row['number_of_possible_assistances']}")
+            with colm2:
+                st.metric(label=f"📤 **Envios:** ", value=f"{row['number_of_shipments']}")
+            with colm3:
+                st.metric(label=f"🗑️ **Descartes:**", value=f" {row['number_of_discards']}")
 
         st.image(row['image_path'])
 

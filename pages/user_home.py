@@ -55,18 +55,18 @@ def show_activity_details(item):
 
     with col_button_1:
         if st.button("Asistiré"):
-            if user_api.update_assistance(user_id=cookies['user_id'], activity_id=item['id'], assistance=True):
+            if user_api.update_possible_assistance(user_id=cookies['user_id'], activity_id=item['id'], possible_assistance=True):
                 st.rerun()
 
     with col_button_2:
 
         if st.button("No lo sé"):
-            if user_api.update_assistance(user_id=cookies['user_id'], activity_id=item['id'], assistance=None):
+            if user_api.update_possible_assistance(user_id=cookies['user_id'], activity_id=item['id'], possible_assistance=None):
                 st.rerun()
 
     with col_button_3:
         if st.button("No Asistiré"):
-            if user_api.update_assistance(user_id=cookies['user_id'], activity_id=item['id'], assistance=False):
+            if user_api.update_possible_assistance(user_id=cookies['user_id'], activity_id=item['id'], possible_assistance=False):
                 st.rerun()
 
 
@@ -87,9 +87,9 @@ if user_activities:
 
             with st.container(border=True):
 
-                if row['assistance']:
+                if row['possible_assistance']:
                     st.markdown(f"<h2 style='color: #82b29a'>{row['name']}</h2>", unsafe_allow_html=True)
-                elif row['assistance'] is None:
+                elif row['possible_assistance'] is None:
                     st.markdown(f"<h2>{row['name']}</h2>", unsafe_allow_html=True)
 
                 place = place_api.get_place_by_id(row["place_id"])
