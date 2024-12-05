@@ -5,8 +5,11 @@ st.set_page_config(
     layout='centered',
     initial_sidebar_state="expanded"
 )
-
+from menu import login, authenticated_menu
 from dotenv import load_dotenv
+import os
+import time
+from streamlit_cookies_manager import EncryptedCookieManager
 from shared.activity_input_form import activity_input_form
 
 from api.activity_api import activiti_api
@@ -14,17 +17,23 @@ from api.activity_api import activiti_api
 
 load_dotenv()
 
-from menu import check_authenticated
+cookies = EncryptedCookieManager(prefix=os.getenv("APPTIVITY_COOKIES_PREFIX"), password=os.getenv("APPTIVITY_COOKIES_PASSWORD"))
+while not cookies.ready():
+    time.sleep(0.1)
+user_id = cookies.get("session_uuid")
 
-check_authenticated()
+if user_id is None:
+    login(cookies)
+    st.stop()
 
-from auth import cookies
 if cookies['organizer_role'] != 'true':
     st.stop()
 
+authenticated_menu(cookies)
+
 st.title("Formulario de Actividad")
 
-data = activity_input_form()
+data = activity_input_form(cookies)
 
 if data:
     response = activiti_api.create_activity(activity=data)

@@ -2,7 +2,6 @@ import streamlit as st
 
 from api.city_api import city_api
 from api.organizer import organizer_api
-from api.place_api import place_api
 from api.user_api import user_api
 
 st.set_page_config(
@@ -11,18 +10,34 @@ st.set_page_config(
     layout='centered',
     initial_sidebar_state="expanded"
 )
-from menu import check_authenticated
+from menu import login, authenticated_menu
 from dotenv import load_dotenv
-
+import os
+import time
+from streamlit_cookies_manager import EncryptedCookieManager
 
 load_dotenv()
-from auth import cookies
+
+
+cookies = EncryptedCookieManager(prefix=os.getenv("APPTIVITY_COOKIES_PREFIX"),
+                                 password=os.getenv("APPTIVITY_COOKIES_PASSWORD"))
+while not cookies.ready():
+    time.sleep(0.1)
+user_id = cookies.get("session_uuid")
+
+if user_id is None:
+    login(cookies)
+    st.stop()
 
 if cookies['user_role'] != 'true':
     st.stop()
 
+authenticated_menu(cookies)
 
-check_authenticated()
+
+if cookies['user_role'] != 'true':
+    st.stop()
+
 
 st.title("Organizadores")
 st.write("Suscribete a un organizador para enterarte de todas sus actividades, independientemente de la categoría y de "

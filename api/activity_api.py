@@ -2,8 +2,6 @@ import requests
 import json
 from api.api import Api
 
-from auth import cookies
-
 
 class ActivityApi(Api):
     endpoint_base = 'activities/'

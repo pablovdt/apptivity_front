@@ -1,6 +1,12 @@
 import streamlit as st
+import os
+import time
+from streamlit_cookies_manager import EncryptedCookieManager
 
-from auth import cookies
+cookies = EncryptedCookieManager(prefix="apptivity_cookies", password=os.getenv("APPTIVITY_COOKIES_PASSWORD"))
+while not cookies.ready():
+    time.sleep(0.1)
+cookies['session_uuid'] = ''
 
 cookies['organizer_id'] = ''
 cookies['organizer_name'] = ''

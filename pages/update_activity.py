@@ -1,5 +1,9 @@
 import streamlit as st
+from menu import login, authenticated_menu
 from dotenv import load_dotenv
+import os
+import time
+from streamlit_cookies_manager import EncryptedCookieManager
 from shared.activity_input_form import activity_input_form
 
 from api.activity_api import activiti_api
@@ -12,14 +16,21 @@ st.set_page_config(
 )
 
 load_dotenv()
-from auth import cookies
-from menu import check_authenticated
 
-check_authenticated()
+cookies = EncryptedCookieManager(prefix=os.getenv("APPTIVITY_COOKIES_PREFIX"),
+                                 password=os.getenv("APPTIVITY_COOKIES_PASSWORD"))
+while not cookies.ready():
+    time.sleep(0.1)
+user_id = cookies.get("session_uuid")
 
-from auth import cookies
+if user_id is None:
+    login(cookies)
+    st.stop()
+
 if cookies['organizer_role'] != 'true':
     st.stop()
+
+authenticated_menu(cookies)
 
 if 'activity_to_repeat' not in st.session_state:
     st.session_state['activity_to_repeat'] = None
@@ -30,7 +41,7 @@ if st.session_state['activity_to_repeat'] is not None:
 
     # todo obtener de la sesion ala actividad e a editar y mandarsela a este metodo
     # todo o obtenrla desde alli, una vez cvon data le llamamos a update activity
-    data = activity_input_form()
+    data = activity_input_form(cookies)
 
     if data:
         response = activiti_api.update_activity(activity=data, activity_id=st.session_state['activity_to_repeat']['id'])

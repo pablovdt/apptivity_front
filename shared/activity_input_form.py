@@ -1,5 +1,4 @@
 import streamlit as st
-from auth import cookies
 from datetime import datetime
 
 from api.category_api import category_api
@@ -7,7 +6,7 @@ from api.place_api import place_api
 from utils import add_one_year, save_image
 
 
-def activity_input_form():
+def activity_input_form(cookies):
     if 'activity_to_repeat' not in st.session_state:
         st.session_state['activity_to_repeat'] = None
 
@@ -69,7 +68,8 @@ def activity_input_form():
 
         cancelled = st.checkbox("Cancelado", value=prefill_values['cancelled'])
 
-        uploaded_file = st.file_uploader("Selecciona una imagen. Si no la proporcionas se pondrá la de tu perfil", type=["jpg", "jpeg", "png"])
+        uploaded_file = st.file_uploader("Selecciona una imagen. Si no la proporcionas se pondrá la de tu perfil",
+                                         type=["jpg", "jpeg", "png"])
 
         if uploaded_file is not None:
             image_path = save_image(uploaded_file)

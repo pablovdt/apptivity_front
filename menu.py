@@ -1,20 +1,26 @@
 import streamlit as st
-
+import uuid
 from api.user_api import user_api
-from auth import cookies
-from api.city_api import city_api
 import json
 from api.organizer import organizer_api
 
-from utils import set_background_image, hash_password, save_image
+def clear_previous_cookies(cookies):
+    keys_to_clear = [
+        'organizer_id', 'organizer_name', 'organizer_email', 'organizer_city_id',
+        'organizer_image_path', 'organizer_latitude', 'organizer_longitude',
+        'organizer_role', 'user_id', 'user_name', 'user_email', 'user_city_id',
+        'user_notification_distance', 'user_categories', 'user_role',
+        'apptivty_authenticated', 'session_uuid'
+    ]
+    for key in keys_to_clear:
+        cookies.pop(key, None)
 
+def check_password(cookies, person_email: str, person_password: str):
 
-def check_password(person_email: str, person_password: str):
+    clear_previous_cookies(cookies)
 
     if organizer_api.validate_organizer(organizer_email=person_email, organizer_password=person_password):
-        organizer_basic_info: dict = organizer_api.get_organizer_basic_info(person_email)
-
-        print(organizer_basic_info)
+        organizer_basic_info = organizer_api.get_organizer_basic_info(person_email)
 
         cookies['organizer_id'] = str(organizer_basic_info['id'])
         cookies['organizer_name'] = organizer_basic_info['name']
@@ -27,13 +33,8 @@ def check_password(person_email: str, person_password: str):
         cookies['organizer_role'] = 'true'
         cookies['user_role'] = 'false'
 
-        cookies['apptivty_authenticated'] = 'true'
-
     elif user_api.validate_user(user_email=person_email, user_password=person_password):
-
-        user_basic_info: dict = user_api.get_user_basic_info(person_email)
-
-        print(user_basic_info)
+        user_basic_info = user_api.get_user_basic_info(person_email)
 
         cookies['user_id'] = str(user_basic_info['id'])
         cookies['user_name'] = user_basic_info['name']
@@ -45,13 +46,18 @@ def check_password(person_email: str, person_password: str):
         cookies['user_role'] = 'true'
         cookies['organizer_role'] = 'false'
 
-        cookies['apptivty_authenticated'] = 'true'
+    else:
+        st.error("Credenciales inválidas.")
+        return
 
+    cookies['session_uuid'] = str(uuid.uuid4())
+
+    cookies['apptivty_authenticated'] = 'true'
     cookies.save()
     st.rerun()
 
 
-def login():
+def login(cookies):
     if st.button("Registrate"):
         st.switch_page("pages/registry.py")
 
@@ -63,16 +69,16 @@ def login():
         with st.form(key="login_form"):
             st.subheader("Accede")
             person_login_email = st.text_input("Email:")
-            person_login_password = st.text_input("Contraseña")
+            person_login_password = st.text_input("Contraseña", type='password')
 
             if st.form_submit_button("Acceder"):
                 if not person_login_email and not person_login_password:
                     st.warning("Campos insuficientes")
                     st.stop()
-                check_password(person_email=person_login_email, person_password=person_login_password)
+                check_password(cookies=cookies, person_email=person_login_email, person_password=person_login_password)
 
 
-def authenticated_menu():
+def authenticated_menu(cookies):
 
     st.sidebar.image("images/logotipo_apptivity2.png")
     for _ in range(2):
@@ -99,12 +105,5 @@ def authenticated_menu():
         st.sidebar.page_link("pages/user_settings.py", label="⚙ ️Ajustes")
 
     st.sidebar.markdown('---')
-    st.sidebar.page_link("pages/logout.py", label="Logout")
+    st.sidebar.page_link("pages/logout.py", label="↩️  Logout")
 
-
-def check_authenticated():
-    if cookies.get("apptivty_authenticated") != "true":
-        login()
-        st.stop()
-    else:
-        authenticated_menu()

@@ -1,14 +1,16 @@
 import streamlit as st
 
-from api.city_api import city_api
-
 st.set_page_config(
     page_title="Apptivity",
     page_icon='',
     layout='centered',
     initial_sidebar_state="expanded"
 )
-from menu import check_authenticated
+from menu import login, authenticated_menu
+import os
+from streamlit_cookies_manager import EncryptedCookieManager
+from api.city_api import city_api
+
 from dotenv import load_dotenv
 import pandas as pd
 from datetime import datetime
@@ -17,14 +19,21 @@ from api.place_api import place_api
 from api.user_api import user_api
 
 load_dotenv()
-from auth import cookies
+import time
+
+cookies = EncryptedCookieManager(prefix=os.getenv("APPTIVITY_COOKIES_PREFIX"), password=os.getenv("APPTIVITY_COOKIES_PASSWORD"))
+while not cookies.ready():
+    time.sleep(0.1)
+user_id = cookies.get("session_uuid")
+
+if user_id is None:
+    login(cookies)
+    st.stop()
 
 if cookies['user_role'] != 'true':
     st.stop()
 
-
-check_authenticated()
-
+authenticated_menu(cookies)
 st.header(f"{cookies['user_name']}, tus actividades:")
 
 user_activities = user_api.get_user_activities(cookies['user_id'], all=False,
@@ -59,18 +68,21 @@ def show_activity_details(item):
 
     with col_button_1:
         if st.button("Asistiré"):
-            if user_api.update_possible_assistance(user_id=cookies['user_id'], activity_id=item['id'], possible_assistance=True):
+            if user_api.update_possible_assistance(user_id=cookies['user_id'], activity_id=item['id'],
+                                                   possible_assistance=True):
                 st.rerun()
 
     with col_button_2:
 
         if st.button("No lo sé"):
-            if user_api.update_possible_assistance(user_id=cookies['user_id'], activity_id=item['id'], possible_assistance=None):
+            if user_api.update_possible_assistance(user_id=cookies['user_id'], activity_id=item['id'],
+                                                   possible_assistance=None):
                 st.rerun()
 
     with col_button_3:
         if st.button("No Asistiré"):
-            if user_api.update_possible_assistance(user_id=cookies['user_id'], activity_id=item['id'], possible_assistance=False):
+            if user_api.update_possible_assistance(user_id=cookies['user_id'], activity_id=item['id'],
+                                                   possible_assistance=False):
                 st.rerun()
 
 

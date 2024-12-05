@@ -8,31 +8,43 @@ st.set_page_config(
     layout='centered',
     initial_sidebar_state="expanded"
 )
-from menu import check_authenticated
+from menu import login, authenticated_menu
+import os
+from streamlit_cookies_manager import EncryptedCookieManager
 from dotenv import load_dotenv
 import pandas as pd
 from datetime import datetime
 from api.category_api import category_api
 from api.place_api import place_api
 from api.user_api import user_api
-
+import time
 now = datetime.now(pytz.timezone("Europe/Madrid"))
 
 load_dotenv()
-from auth import cookies
-check_authenticated()
+
+cookies = EncryptedCookieManager(prefix=os.getenv("APPTIVITY_COOKIES_PREFIX"),
+                                 password=os.getenv("APPTIVITY_COOKIES_PASSWORD"))
+while not cookies.ready():
+    time.sleep(0.1)
+user_id = cookies.get("session_uuid")
+
+if user_id is None:
+    login(cookies)
+    st.stop()
 
 if cookies['user_role'] != 'true':
     st.stop()
+
+authenticated_menu(cookies)
 
 st.header(f"{cookies['user_name']}, todas tus actividades:")
 st.write("Aqui verás todas tus actividades, eliminadas, que ya han finzalizado...")
 
 user_activities = user_api.get_user_activities(cookies['user_id'], all=True, is_date_order_asc=False)
 
+
 @st.dialog("Información")
 def show_activity_details(item):
-
     place = place_api.get_place_by_id(item["place_id"])
     if not place['location_url']:
         st.write(f'📍 **Lugar**: {place["name"]}')
@@ -55,25 +67,29 @@ def show_activity_details(item):
 
     st.image(item['image_path'], use_column_width=True)
 
-    col_button_1, col_button_2, col_button_3= st.columns([2, 2,2])
+    col_button_1, col_button_2, col_button_3 = st.columns([2, 2, 2])
 
-    if  date_obj > now:
+    if date_obj > now:
 
         with col_button_1:
             if st.button("Asistiré"):
-                if user_api.update_possible_assistance(user_id = cookies['user_id'], activity_id=item['id'], possible_assistance=True):
+                if user_api.update_possible_assistance(user_id=cookies['user_id'], activity_id=item['id'],
+                                                       possible_assistance=True):
                     st.rerun()
 
         with col_button_2:
 
             if st.button("No lo sé"):
-                if user_api.update_possible_assistance(user_id=cookies['user_id'], activity_id=item['id'], possible_assistance=None):
+                if user_api.update_possible_assistance(user_id=cookies['user_id'], activity_id=item['id'],
+                                                       possible_assistance=None):
                     st.rerun()
 
         with col_button_3:
             if st.button("No Asistiré"):
-                if user_api.update_possible_assistance(user_id=cookies['user_id'], activity_id=item['id'], possible_assistance=False):
+                if user_api.update_possible_assistance(user_id=cookies['user_id'], activity_id=item['id'],
+                                                       possible_assistance=False):
                     st.rerun()
+
 
 if user_activities:
     df = pd.DataFrame(user_activities)
@@ -116,10 +132,8 @@ if user_activities:
                     st.image(row['image_path'], use_column_width=True)
 
                 if st.button(f"Ver actividad - {row['name']}"):
-
                     show_activity_details(row)
 
 
 else:
     st.info("Aquí aparecerán tus actividades")
-

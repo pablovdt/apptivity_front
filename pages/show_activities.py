@@ -1,28 +1,40 @@
 import streamlit as st
+
 st.set_page_config(
     page_title="Apptivity - Ver Actividades-",
     page_icon='',
     layout='centered',
     initial_sidebar_state="expanded"
 )
+from menu import login, authenticated_menu
 import pandas as pd
 from dotenv import load_dotenv
+import os
+import time
+from streamlit_cookies_manager import EncryptedCookieManager
 from datetime import datetime
 from api.activity_api import activiti_api
 from api.category_api import category_api
 from api.place_api import place_api
 
-
 import pytz
+
 load_dotenv()
-from auth import cookies
-from menu import check_authenticated
 
-check_authenticated()
+cookies = EncryptedCookieManager(prefix=os.getenv("APPTIVITY_COOKIES_PREFIX"),
+                                 password=os.getenv("APPTIVITY_COOKIES_PASSWORD"))
+while not cookies.ready():
+    time.sleep(0.1)
+user_id = cookies.get("session_uuid")
 
-from auth import cookies
+if user_id is None:
+    login(cookies)
+    st.stop()
+
 if cookies['organizer_role'] != 'true':
     st.stop()
+
+authenticated_menu(cookies)
 
 now = datetime.now(pytz.timezone("Europe/Madrid"))
 
@@ -49,7 +61,8 @@ with col3:
     place_selected_name = st.selectbox("Selecciona un lugar", places_options.keys())
     place_id = places_options[place_selected_name]
 
-activities = activiti_api.get_activities(organizer_id=cookies['organizer_id'], is_date_order_asc=False, activity_name=input_name, place_id=place_id,
+activities = activiti_api.get_activities(organizer_id=cookies['organizer_id'], is_date_order_asc=False,
+                                         activity_name=input_name, place_id=place_id,
                                          cancelled=cancelled)
 
 df = pd.DataFrame(activities)
@@ -77,7 +90,8 @@ if activities:
 
             if date_obj < now:
                 if row['number_of_shipments'] > 0:
-                    st.write(f"%  **Porcentaje de asistencia:** {(row['number_of_assistances'] / row['number_of_shipments']) * 100} %")
+                    st.write(
+                        f"%  **Porcentaje de asistencia:** {(row['number_of_assistances'] / row['number_of_shipments']) * 100} %")
                 else:
                     st.write(f"%  **Porcentaje de asistencia:** 0.0 %")
 
@@ -89,9 +103,9 @@ if activities:
 
                 colm1, colm2, colm3, colm4 = st.columns([2, 2, 2, 2])
                 with colm1:
-                    st.metric(label=f"👥 ✅ **Asistencias:**",value=f"{row['number_of_assistances']}")
+                    st.metric(label=f"👥 ✅ **Asistencias:**", value=f"{row['number_of_assistances']}")
                 with colm2:
-                    st.metric(label=f"👥 **Posibles asistencias:**",value=f"{row['number_of_possible_assistances']}")
+                    st.metric(label=f"👥 **Posibles asistencias:**", value=f"{row['number_of_possible_assistances']}")
                 with colm3:
                     st.metric(label=f"📤 **Envios:** ", value=f"{row['number_of_shipments']}")
                 with colm4:
@@ -99,7 +113,7 @@ if activities:
             else:
                 colm1, colm2, colm3 = st.columns([2, 2, 2])
                 with colm1:
-                    st.metric(label=f"👥 **Posibles asistencias:**",value=f"{row['number_of_possible_assistances']}")
+                    st.metric(label=f"👥 **Posibles asistencias:**", value=f"{row['number_of_possible_assistances']}")
                 with colm2:
                     st.metric(label=f"📤 **Envios:** ", value=f"{row['number_of_shipments']}")
                 with colm3:

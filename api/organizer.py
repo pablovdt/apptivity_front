@@ -1,5 +1,4 @@
 import requests
-import requests
 import json
 from api.api import Api
 from utils import verify_hash_password

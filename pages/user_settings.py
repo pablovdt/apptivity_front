@@ -11,17 +11,30 @@ st.set_page_config(
     layout='centered',
     initial_sidebar_state="expanded"
 )
-
+from menu import login, authenticated_menu
+import os
+import time
+from streamlit_cookies_manager import EncryptedCookieManager
 load_dotenv()
 
-from menu import check_authenticated
+cookies = EncryptedCookieManager(prefix=os.getenv("APPTIVITY_COOKIES_PREFIX"),
+                                 password=os.getenv("APPTIVITY_COOKIES_PASSWORD"))
+while not cookies.ready():
+    time.sleep(0.1)
+user_id = cookies.get("session_uuid")
 
-check_authenticated()
-
-from auth import cookies
+if user_id is None:
+    login(cookies)
+    st.stop()
 
 if cookies['user_role'] != 'true':
     st.stop()
+
+authenticated_menu(cookies)
+
+if cookies['user_role'] != 'true':
+    st.stop()
+
 
 categories: list = category_api.get_categories()
 categories_options = {category["name"]: category["id"] for category in categories}

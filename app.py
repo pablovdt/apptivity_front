@@ -1,27 +1,29 @@
-import streamlit as st
 from dotenv import load_dotenv
-import pandas as pd
-from datetime import datetime
-from api.category_api import category_api
-from api.place_api import place_api
-from api.user_api import user_api
-
-st.set_page_config(
-    page_title="Apptivity",
-    page_icon='',
-    layout='centered',
-    initial_sidebar_state="expanded"
-)
+import os
+import time
+from menu import login, authenticated_menu
+from streamlit_cookies_manager import EncryptedCookieManager
+import streamlit as st
 
 load_dotenv()
-from auth import cookies
-from menu import check_authenticated
 
-check_authenticated()
+cookies = EncryptedCookieManager(prefix=os.getenv("APPTIVITY_COOKIES_PREFIX"),
+                                 password=os.getenv("APPTIVITY_COOKIES_PASSWORD"))
+while not cookies.ready():
+    time.sleep(0.1)
+
+if not cookies.ready():
+    st.stop()
+
+user_id = cookies.get("session_uuid")
+if user_id is None or user_id == '':
+    login(cookies)
+    st.stop()
 
 if cookies['organizer_role'] == 'true':
-
+    authenticated_menu(cookies)
     st.switch_page("pages/organizer_home.py")
 
 elif cookies['user_role'] == 'true':
+
     st.switch_page("pages/user_home.py")

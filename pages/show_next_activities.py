@@ -1,29 +1,39 @@
-
 import streamlit as st
+
 st.set_page_config(
     page_title="Apptivity - Ver Proximas actividades -",
     page_icon='',
     layout='centered',
     initial_sidebar_state="expanded"
 )
+from menu import login, authenticated_menu
 import pandas as pd
 from dotenv import load_dotenv
+import os
+import time
+from streamlit_cookies_manager import EncryptedCookieManager
+from shared.activity_input_form import activity_input_form
 from datetime import datetime
 from api.activity_api import activiti_api
 from api.category_api import category_api
 from api.place_api import place_api
 
-
-
 load_dotenv()
-from auth import cookies
-from menu import check_authenticated
 
-check_authenticated()
+cookies = EncryptedCookieManager(prefix=os.getenv("APPTIVITY_COOKIES_PREFIX"),
+                                 password=os.getenv("APPTIVITY_COOKIES_PASSWORD"))
+while not cookies.ready():
+    time.sleep(0.1)
+user_id = cookies.get("session_uuid")
 
-from auth import cookies
+if user_id is None:
+    login(cookies)
+    st.stop()
+
 if cookies['organizer_role'] != 'true':
     st.stop()
+
+authenticated_menu(cookies)
 
 st.title('Gestiona actividades futuras')
 
@@ -40,9 +50,9 @@ with col3:
     place_selected_name = st.selectbox("Selecciona un lugar", places_options.keys())
     place_id = places_options[place_selected_name]
 
-activities = activiti_api.get_activities(organizer_id=cookies['organizer_id'],date_from=datetime.now().strftime("%Y-%m-%d"), activity_name=input_name,
+activities = activiti_api.get_activities(organizer_id=cookies['organizer_id'],
+                                         date_from=datetime.now().strftime("%Y-%m-%d"), activity_name=input_name,
                                          place_id=place_id, cancelled=cancelled)
-
 
 df = pd.DataFrame(activities)
 
@@ -68,7 +78,7 @@ if activities:
                 st.write(f"🚫 **CANCELADA !!**")
             colm1, colm2, colm3 = st.columns([2, 2, 2])
             with colm1:
-                st.metric(label=f"👥 **Posibles asistencias:**",value=f"{row['number_of_possible_assistances']}")
+                st.metric(label=f"👥 **Posibles asistencias:**", value=f"{row['number_of_possible_assistances']}")
             with colm2:
                 st.metric(label=f"📤 **Envios:** ", value=f"{row['number_of_shipments']}")
             with colm3:

@@ -1,27 +1,36 @@
 import streamlit as st
+
 st.set_page_config(
     page_title="Apptivity - Estadisticas -",
     page_icon='',
     layout='centered',
     initial_sidebar_state="expanded"
 )
+from menu import login, authenticated_menu
 import pandas as pd
 from dotenv import load_dotenv
-
+import os
+import time
+from streamlit_cookies_manager import EncryptedCookieManager
 from api.activity_api import activiti_api
 from api.category_api import category_api
 
-
-
 load_dotenv()
-from auth import cookies
-from menu import check_authenticated
 
-check_authenticated()
+cookies = EncryptedCookieManager(prefix=os.getenv("APPTIVITY_COOKIES_PREFIX"),
+                                 password=os.getenv("APPTIVITY_COOKIES_PASSWORD"))
+while not cookies.ready():
+    time.sleep(0.1)
+user_id = cookies.get("session_uuid")
 
-from auth import cookies
+if user_id is None:
+    login(cookies)
+    st.stop()
+
 if cookies['organizer_role'] != 'true':
     st.stop()
+
+authenticated_menu(cookies)
 
 for _ in range(3):
     st.write("")
@@ -50,7 +59,6 @@ for _ in range(5):
     st.write('')
 st.line_chart(df.set_index('Mes')['Actividades'])
 
-
 # metrics
 
 total_shipments = 0
@@ -78,8 +86,6 @@ if total_possible_assistances > 0:
     porcentaje_cumplimiento = (total_assistances / total_possible_assistances) * 100
 else:
     porcentaje_cumplimiento = 0.0
-
-
 
 st.header("Categorías de tus actividades:")
 if activities:

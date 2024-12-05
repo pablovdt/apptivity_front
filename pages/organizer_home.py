@@ -1,33 +1,41 @@
 import streamlit as st
+
 st.set_page_config(
     page_title="Apptivity",
     page_icon='',
     layout='wide',
     initial_sidebar_state="expanded"
 )
+from menu import login, authenticated_menu
 from dotenv import load_dotenv
+import os
+import time
+from streamlit_cookies_manager import EncryptedCookieManager
 
-import pandas as pd
-from datetime import datetime
 from api.category_api import category_api
 from api.place_api import place_api
-from api.user_api import user_api
-
-
 
 load_dotenv()
-from auth import cookies
 
-from menu import check_authenticated
+cookies = EncryptedCookieManager(prefix=os.getenv("APPTIVITY_COOKIES_PREFIX"),
+                                 password=os.getenv("APPTIVITY_COOKIES_PASSWORD"))
+while not cookies.ready():
+    time.sleep(0.1)
+user_id = cookies.get("session_uuid")
 
-check_authenticated()
+if user_id is None:
+    login(cookies)
+    st.stop()
 
+if cookies['organizer_role'] != 'true':
+    st.stop()
+
+authenticated_menu(cookies)
 
 st.title(f"Hola {cookies['organizer_name']}")
 
 for _ in range(5):
     st.write("")
-
 
 from datetime import datetime, timedelta
 import pytz
@@ -35,6 +43,7 @@ import pytz
 from api.activity_api import activiti_api
 
 activities = activiti_api.get_activities(organizer_id=cookies['organizer_id'])
+
 
 @st.dialog("Información")
 def show_activity_details(i, row):
@@ -115,7 +124,6 @@ total, today, this_week, this_month, this_year = count_activities_by_timeframe(a
 
 st.header("Vista rápida de Actividades")
 with st.container(border=True):
-
     col1, col2, col3, col4, col5 = st.columns([2, 2, 2, 2, 2])
     # todo, obtener las de dia, mes, semana, año pasado...para meterlo en el delta
     with col1:
@@ -183,14 +191,15 @@ for year, months in sorted(activities_by_year.items()):
             unsafe_allow_html=True
         )
 
-
     for month, days in sorted(months.items()):
 
         st.header(months_translation.get(month, month.capitalize()))
 
         for day, activities_in_day in sorted(days.items()):
             with st.container():
-                st.markdown(f"<h4>{days_translation.get(day.split(' ')[0], day.split(' ')[0]).capitalize()} {day.split(' ')[-1]}</h4>", unsafe_allow_html=True)
+                st.markdown(
+                    f"<h4>{days_translation.get(day.split(' ')[0], day.split(' ')[0]).capitalize()} {day.split(' ')[-1]}</h4>",
+                    unsafe_allow_html=True)
 
             for i, activity in enumerate(activities_in_day):
 
@@ -230,6 +239,3 @@ for year, months in sorted(activities_by_year.items()):
                     # Crear el botón con Streamlit
                     if st.button("Ver Actividad", key=activity['name']):
                         show_activity_details(i, activity)
-
-
-

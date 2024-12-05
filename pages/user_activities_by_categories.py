@@ -6,21 +6,34 @@ st.set_page_config(
     layout='centered',
     initial_sidebar_state="expanded"
 )
-from api.activity_api import activiti_api
+from menu import login, authenticated_menu
 from api.city_api import city_api
-
-from menu import check_authenticated
+import os
+from streamlit_cookies_manager import EncryptedCookieManager
 from dotenv import load_dotenv
 import pandas as pd
 from datetime import datetime
-from api.category_api import category_api
+
 from api.place_api import place_api
 from api.user_api import user_api
-
+import time
 load_dotenv()
-from auth import cookies
 
-check_authenticated()
+cookies = EncryptedCookieManager(prefix=os.getenv("APPTIVITY_COOKIES_PREFIX"),
+                                 password=os.getenv("APPTIVITY_COOKIES_PASSWORD"))
+while not cookies.ready():
+    time.sleep(0.1)
+user_id = cookies.get("session_uuid")
+
+if user_id is None:
+    login(cookies)
+    st.stop()
+
+if cookies['user_role'] != 'true':
+    st.stop()
+
+authenticated_menu(cookies)
+
 
 if cookies['user_role'] != 'true':
     st.stop()
