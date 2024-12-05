@@ -10,7 +10,7 @@ from api.activity_api import activiti_api
 
 st.set_page_config(
     page_title="Apptivity - Actualizar Actividad-",
-    page_icon='',
+    page_icon='images/logotipo_apptivity3.png',
     layout='centered',
     initial_sidebar_state="expanded"
 )
@@ -39,8 +39,8 @@ if st.session_state['activity_to_repeat'] is not None:
 
     st.title("Edita la Actividad")
 
-    # todo obtener de la sesion ala actividad e a editar y mandarsela a este metodo
-    # todo o obtenrla desde alli, una vez cvon data le llamamos a update activity
+    # todo obtener de la sesion la actividad  a editar y mandarsela a este metodo
+    # todo o obtenrla desde alli, una vez con data le llamamos a update activity
     data = activity_input_form(cookies)
 
     if data:

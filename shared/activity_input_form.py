@@ -1,6 +1,6 @@
 import streamlit as st
 from datetime import datetime
-
+import pytz
 from api.category_api import category_api
 from api.place_api import place_api
 from utils import add_one_year, save_image
@@ -27,8 +27,8 @@ def activity_input_form(cookies):
         prefill_values = {
             "name": "",
             "place_id": None,
-            "date": datetime.today().date(),
-            "time": datetime.now().time(),
+            "date": datetime.now(pytz.timezone("Europe/Madrid")).date(),
+            "time": datetime.now(pytz.timezone("Europe/Madrid")).time(),
             "price": 0.0,
             "description": "",
             "category_id": None,

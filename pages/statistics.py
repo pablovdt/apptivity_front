@@ -2,10 +2,11 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Apptivity - Estadisticas -",
-    page_icon='',
+    page_icon='images/logotipo_apptivity3.png',
     layout='centered',
     initial_sidebar_state="expanded"
 )
+import pytz
 from menu import login, authenticated_menu
 import pandas as pd
 from dotenv import load_dotenv
@@ -39,7 +40,7 @@ st.header("Actividades por mes")
 
 from datetime import datetime
 
-current_year = datetime.now().year
+current_year = datetime.now(pytz.timezone("Europe/Madrid")).year
 
 year = st.selectbox('Selecciona un año', [2020, 2021, 2022, 2023, 2024, 2025],
                     index=[2020, 2021, 2022, 2023, 2024, 2025].index(current_year))

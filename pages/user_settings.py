@@ -7,7 +7,7 @@ from api.user_api import user_api
 
 st.set_page_config(
     page_title="Apptivity - Ajustes -",
-    page_icon='',
+    page_icon='images/logotipo_apptivity3.png',
     layout='centered',
     initial_sidebar_state="expanded"
 )

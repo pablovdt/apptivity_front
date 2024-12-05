@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Apptivity - Top Ranking -",
-    page_icon='',
+    page_icon='images/logotipo_apptivity3.png',
     layout='centered',
     initial_sidebar_state="expanded"
 )
@@ -20,7 +20,7 @@ from api.city_api import city_api
 
 from dotenv import load_dotenv
 import pandas as pd
-from datetime import datetime
+
 
 load_dotenv()
 
@@ -45,7 +45,7 @@ if cookies['user_role'] != 'true':
     st.stop()
 
 
-activities = activiti_api.get_activities(date_from=datetime.now().strftime("%Y-%m-%d"), cancelled=False,
+activities = activiti_api.get_activities(date_from=datetime.now(pytz.timezone("Europe/Madrid")).strftime("%Y-%m-%d"), cancelled=False,
                                          order_by_assistance=True, limit=10)
 if activities:
 

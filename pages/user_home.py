@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Apptivity",
-    page_icon='',
+    page_icon='images/logotipo_apptivity3.png',
     layout='centered',
     initial_sidebar_state="expanded"
 )
@@ -37,7 +37,7 @@ authenticated_menu(cookies)
 st.header(f"{cookies['user_name']}, tus actividades:")
 
 user_activities = user_api.get_user_activities(cookies['user_id'], all=False,
-                                               date_from=datetime.now().strftime("%Y-%m-%d"))
+                                               date_from=datetime.now(pytz.timezone("Europe/Madrid")).strftime("%Y-%m-%d"))
 
 
 @st.dialog("Información")

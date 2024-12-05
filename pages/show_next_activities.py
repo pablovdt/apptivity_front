@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Apptivity - Ver Proximas actividades -",
-    page_icon='',
+    page_icon='images/logotipo_apptivity3.png',
     layout='centered',
     initial_sidebar_state="expanded"
 )
@@ -51,7 +51,7 @@ with col3:
     place_id = places_options[place_selected_name]
 
 activities = activiti_api.get_activities(organizer_id=cookies['organizer_id'],
-                                         date_from=datetime.now().strftime("%Y-%m-%d"), activity_name=input_name,
+                                         date_from=datetime.now(pytz.timezone("Europe/Madrid")).strftime("%Y-%m-%d"), activity_name=input_name,
                                          place_id=place_id, cancelled=cancelled)
 
 df = pd.DataFrame(activities)

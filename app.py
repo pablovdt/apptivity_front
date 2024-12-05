@@ -1,9 +1,16 @@
+import streamlit as st
+st.set_page_config(
+    page_title="Apptivity",
+    page_icon='images/logotipo_apptivity3.png',
+    layout='centered',
+    initial_sidebar_state="expanded"
+)
+
 from dotenv import load_dotenv
 import os
 import time
 from menu import login, authenticated_menu
 from streamlit_cookies_manager import EncryptedCookieManager
-import streamlit as st
 
 load_dotenv()
 

@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Apptivity - Mapa-",
-    page_icon='',
+    page_icon='images/logotipo_apptivity3.png',
     layout='centered',
     initial_sidebar_state="expanded"
 )

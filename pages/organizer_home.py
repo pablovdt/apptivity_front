@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Apptivity",
-    page_icon='',
+    page_icon='images/logotipo_apptivity3.png',
     layout='wide',
     initial_sidebar_state="expanded"
 )
@@ -87,7 +87,7 @@ def parse_date(date_str):
     return datetime.fromisoformat(date_str.replace('Z', '+00:00'))
 
 
-local_tz = pytz.timezone('Europe/Madrid')  # Usando la zona horaria de Madrid como ejemplo
+local_tz = pytz.timezone('Europe/Madrid')
 
 current_time = datetime.now(local_tz)
 start_of_week = current_time - timedelta(days=current_time.weekday())

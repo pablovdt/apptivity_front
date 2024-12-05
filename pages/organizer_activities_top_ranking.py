@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Apptivity - Top Ranking-",
-    page_icon='',
+    page_icon='images/logotipo_apptivity3.png',
     layout='centered',
     initial_sidebar_state="expanded"
 )
@@ -22,7 +22,6 @@ import os
 import time
 from streamlit_cookies_manager import EncryptedCookieManager
 import pandas as pd
-from datetime import datetime
 
 load_dotenv()
 
@@ -42,10 +41,10 @@ if cookies['organizer_role'] != 'true':
 authenticated_menu(cookies)
 
 organizer_activities = activiti_api.get_activities(organizer_id=cookies['organizer_id'],
-                                                   date_from=datetime.now().strftime("%Y-%m-%d"), cancelled=False,
+                                                   date_from=datetime.now(pytz.timezone("Europe/Madrid")).strftime("%Y-%m-%d"), cancelled=False,
                                                    order_by_assistance=True)
 
-general_activities = activiti_api.get_activities(date_from=datetime.now().strftime("%Y-%m-%d"), cancelled=False,
+general_activities = activiti_api.get_activities(date_from=datetime.now(pytz.timezone("Europe/Madrid")).strftime("%Y-%m-%d"), cancelled=False,
                                                  order_by_assistance=True, limit=10)
 
 st.title('🔥 Ranking de Eventos Populares 🔥')
