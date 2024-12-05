@@ -7,6 +7,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 from menu import login, authenticated_menu
+import pytz
 import pandas as pd
 from dotenv import load_dotenv
 import os

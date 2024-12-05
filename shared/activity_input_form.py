@@ -5,8 +5,14 @@ from api.category_api import category_api
 from api.place_api import place_api
 from utils import add_one_year, save_image
 
+madrid_tz = pytz.timezone('Europe/Madrid')
 
 def activity_input_form(cookies):
+    now = datetime.now(madrid_tz)
+
+    date = now.date()
+    time = now.time()
+
     if 'activity_to_repeat' not in st.session_state:
         st.session_state['activity_to_repeat'] = None
 
@@ -27,8 +33,8 @@ def activity_input_form(cookies):
         prefill_values = {
             "name": "",
             "place_id": None,
-            "date": datetime.now(pytz.timezone("Europe/Madrid")).date(),
-            "time": datetime.now(pytz.timezone("Europe/Madrid")).time(),
+            "date": date,
+            "time": time,
             "price": 0.0,
             "description": "",
             "category_id": None,
@@ -57,7 +63,7 @@ def activity_input_form(cookies):
         place_id = places_options[place_selected_name]
 
         date = st.date_input("Fecha", value=prefill_values['date'])
-        time = st.time_input("Hora", value=prefill_values['time'])
+        time = st.time_input("Hora", )
 
         price = st.number_input("Precio", min_value=0.0, format="%.2f", value=float(prefill_values['price']))
         description = st.text_area("Descripción", value=prefill_values['description'])
@@ -78,9 +84,11 @@ def activity_input_form(cookies):
 
         submit_button = st.form_submit_button("Enviar")
 
-        if submit_button:
-            date_time = datetime.combine(date, time).isoformat() + 'Z'
+        combined_datetime = datetime.combine(date, time)
+        localized_datetime = madrid_tz.localize(combined_datetime)
+        date_time = localized_datetime.isoformat()
 
+        if submit_button:
             data = {
                 "name": name,
                 "place_id": place_id,
