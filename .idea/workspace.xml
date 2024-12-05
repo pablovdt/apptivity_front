@@ -4,34 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3455f86-bac7-44eb-950e-bd75bfa8748c" name="Changes" comment="fix: cookies organizer">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+    <list default="true" id="e3455f86-bac7-44eb-950e-bd75bfa8748c" name="Changes" comment="feat: script to insert categories">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/activity_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/activity_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/category_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/category_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/city_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/city_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/organizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/organizer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/user_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/user_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/city_bot.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/create_activity.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/create_activity.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/logout.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/logout.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/organizer_activities_top_ranking.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/organizer_activities_top_ranking.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/organizer_home.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/organizer_home.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/organizer_map.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/organizer_map.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/show_activities.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/show_activities.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/show_next_activities.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/show_next_activities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/statistics.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/statistics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/user_activities_by_categories.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user_activities_by_categories.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/user_activities_top_ranking.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user_activities_top_ranking.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/update_activity.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/update_activity.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/user_home.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user_home.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/user_organizers.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user_organizers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/user_settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user_settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/user_show_activities.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user_show_activities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/user_statistics.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user_statistics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shared/activity_input_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/shared/activity_input_form.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -62,6 +42,8 @@
   "keyToString": {
     "Python.city_bot.executor": "Run",
     "Python.cookies_trial.executor": "Run",
+    "Python.date_trial.executor": "Run",
+    "Python.insert_data_in_db.executor": "Run",
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
@@ -78,7 +60,7 @@
       <recent name="$PROJECT_DIR$/pages" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.cookies_trial">
+  <component name="RunManager" selected="Python.insert_data_in_db">
     <configuration name="cookies_trial" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="apptivity_front" />
       <option name="ENV_FILES" value="" />
@@ -93,6 +75,50 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cookies_trial.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="date_trial" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="apptivity_front" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/date_trial.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="insert_data_in_db" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="apptivity_front" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insert_data_in_db.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -125,6 +151,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.insert_data_in_db" />
+        <item itemvalue="Python.date_trial" />
         <item itemvalue="Python.cookies_trial" />
       </list>
     </recent_temporary>
@@ -241,7 +269,39 @@
       <option name="project" value="LOCAL" />
       <updated>1733328760259</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="fix: cookies general">
+      <option name="closed" value="true" />
+      <created>1733408411095</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1733408411095</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fix: correct hour zone">
+      <option name="closed" value="true" />
+      <created>1733412573036</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1733412573036</updated>
+    </task>
+    <task id="LOCAL-00015" summary="fix: correct hour zone 2">
+      <option name="closed" value="true" />
+      <created>1733416089587</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1733416089587</updated>
+    </task>
+    <task id="LOCAL-00016" summary="feat: script to insert categories">
+      <option name="closed" value="true" />
+      <created>1733416109352</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1733416109352</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -256,6 +316,10 @@
     <MESSAGE value="feat: improving styles" />
     <MESSAGE value="feat: add user subscribe organizer" />
     <MESSAGE value="fix: cookies organizer" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: cookies organizer" />
+    <MESSAGE value="fix: cookies general" />
+    <MESSAGE value="fix: correct hour zone" />
+    <MESSAGE value="fix: correct hour zone 2" />
+    <MESSAGE value="feat: script to insert categories" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: script to insert categories" />
   </component>
 </project>

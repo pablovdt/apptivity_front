@@ -45,7 +45,7 @@ with col1:
 with col2:
     cancelled = st.toggle('Cancelada', value=False)
 with col3:
-    places: list = place_api.get_places_by_id(cookies['city_id'])
+    places: list = place_api.get_places_by_id(cookies['organizer_city_id'])
     places_options = {"": ""}
     places_options.update({place["name"]: place["id"] for place in places})
     place_selected_name = st.selectbox("Selecciona un lugar", places_options.keys())
@@ -64,10 +64,7 @@ if activities:
         with st.container(border=True):
             st.subheader(row['name'])
             place = place_api.get_place_by_id(row["place_id"])
-            if not place['location_url']:
-                st.write(f'📍 **Lugar**: {place["name"]}')
-            else:
-                st.write(f'📍 **Lugar:** {place["name"]}. **Ubicación:** {place["location_url"]}')
+            st.write(f'📍 **Lugar:** [{place["name"]}]({place["location_url"]})')
             date_obj = datetime.fromisoformat(row['date'])
             st.write(f"📅 **Fecha:** {date_obj.strftime('%A, %d de %B de %Y')}")
             st.write(f"🕒 **Hora:** {date_obj.strftime('%H:%M:%S')}")

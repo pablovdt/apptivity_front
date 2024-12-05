@@ -1,6 +1,8 @@
 import streamlit as st
 from datetime import datetime
 import pytz
+from altair import value
+
 from api.category_api import category_api
 from api.place_api import place_api
 from utils import add_one_year, save_image
@@ -17,6 +19,7 @@ def activity_input_form(cookies):
         st.session_state['activity_to_repeat'] = None
 
     if st.session_state['activity_to_repeat'] is not None:
+
 
         prefill_values = {
             "name": st.session_state['activity_to_repeat']['name'],
@@ -63,7 +66,7 @@ def activity_input_form(cookies):
         place_id = places_options[place_selected_name]
 
         date = st.date_input("Fecha", value=prefill_values['date'])
-        time = st.time_input("Hora", )
+        time = st.time_input("Hora", value=prefill_values['time'])
 
         price = st.number_input("Precio", min_value=0.0, format="%.2f", value=float(prefill_values['price']))
         description = st.text_area("Descripción", value=prefill_values['description'])
@@ -98,11 +101,7 @@ def activity_input_form(cookies):
                 "description": description,
                 "image_path": image_path,
                 "category_id": category_id,
-                "cancelled": cancelled,
-                "number_of_possible_assistances": 0,
-                "number_of_assistances": 0,
-                "number_of_shipments": 0,
-                "number_of_discards": 0
+                "cancelled": cancelled
             }
 
             return data

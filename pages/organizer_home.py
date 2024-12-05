@@ -49,10 +49,8 @@ activities = activiti_api.get_activities(organizer_id=cookies['organizer_id'])
 def show_activity_details(i, row):
     st.subheader(row['name'])
     place = place_api.get_place_by_id(row["place_id"])
-    if not place['location_url']:
-        st.write(f'📍 **Lugar**: {place["name"]}')
-    else:
-        st.write(f'📍 **Lugar:** {place["name"]}. **Ubicación:** {place["location_url"]}')
+
+    st.write(f'📍 **Lugar:** [{place["name"]}]({place["location_url"]})')
     date_obj = datetime.fromisoformat(row['date'])
     st.write(f"📅 **Fecha:** {date_obj.strftime('%A, %d de %B de %Y')}")
     st.write(f"🕒 **Hora:** {date_obj.strftime('%H:%M:%S')}")

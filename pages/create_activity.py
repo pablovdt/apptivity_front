@@ -32,6 +32,7 @@ if cookies['organizer_role'] != 'true':
 authenticated_menu(cookies)
 
 st.title("Formulario de Actividad")
+# st.session_state['activity_to_repeat'] = None
 
 data = activity_input_form(cookies)
 
