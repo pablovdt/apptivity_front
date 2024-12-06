@@ -67,7 +67,7 @@ if activities:
             st.write(f'📍 **Lugar:** [{place["name"]}]({place["location_url"]})')
             date_obj = datetime.fromisoformat(row['date'])
             st.write(f"📅 **Fecha:** {date_obj.strftime('%A, %d de %B de %Y')}")
-            st.write(f"🕒 **Hora:** {date_obj.strftime('%H:%M:%S')}")
+            st.write(f"🕒 **Hora:** {date_obj.strftime('%H:%M')}")
             st.write(f"💰 **Precio:** {row['price']} €")
             st.write(f"📝 **Descripción:** {row['description']}")
             category = category_api.get_category_by_id(row['category_id'])['name']
@@ -87,12 +87,12 @@ if activities:
 
             with col1:
                 if st.button("Editar Actividad", key=f'edit{i}'):
-                    st.session_state['activity_to_repeat'] = row
+                    st.session_state['activity_to_edit'] = row
                     st.switch_page('pages/update_activity.py')
             with col2:
                 if st.button("Repetir Actividad", key=f'repeat{i}'):
                     st.session_state['activity_to_repeat'] = row
-                    st.switch_page('pages/create_activity.py')
+                    st.switch_page('pages/repeat_activity.py')
 
 else:
     st.info("Cuando crees actividades, aparecerán aqui:")

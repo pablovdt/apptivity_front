@@ -32,23 +32,23 @@ if cookies['organizer_role'] != 'true':
 
 authenticated_menu(cookies)
 
-if 'activity_to_repeat' not in st.session_state:
-    st.session_state['activity_to_repeat'] = None
+if 'activity_to_edit' not in st.session_state:
+    st.session_state['activity_to_edit'] = None
 
-if st.session_state['activity_to_repeat'] is not None:
+if st.session_state['activity_to_edit'] is not None:
 
     st.title("Edita la Actividad")
 
-    data = activity_input_form(cookies)
+    data = activity_input_form(activity=st.session_state['activity_to_edit'],  cookies=cookies)
 
     if data:
-        response = activiti_api.update_activity(activity=data, activity_id=st.session_state['activity_to_repeat']['id'])
+        response = activiti_api.update_activity(activity=data, activity_id=st.session_state['activity_to_edit']['id'])
 
         if response.status_code == 200:
             st.success("Actividad Actualizada exitosamente!")
-            st.session_state['activity_to_repeat'] = None
         else:
             st.error(f"Error {response.status_code}: {response.text}")
 
+        st.session_state['activity_to_edit'] = None
 else:
     st.warning("Selecciona una actividad para editar")

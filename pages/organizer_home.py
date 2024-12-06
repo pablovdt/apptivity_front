@@ -73,7 +73,7 @@ def show_activity_details(i, row):
 
     with col1:
         if st.button("Editar Actividad", key=f'edit{i}'):
-            st.session_state['activity_to_repeat'] = row
+            st.session_state['activity_to_edit'] = row
             st.switch_page('pages/update_activity.py')
     with col2:
         if st.button("Repetir Actividad", key=f'repeat{i}'):
@@ -235,5 +235,5 @@ for year, months in sorted(activities_by_year.items()):
                     """, unsafe_allow_html=True)
 
                     # Crear el botón con Streamlit
-                    if st.button("Ver Actividad", key=activity['name']):
+                    if st.button("Ver Actividad", key=f"{activity['name']}-{i}"):
                         show_activity_details(i, activity)
