@@ -53,4 +53,5 @@ if data:
     else:
         st.error(f"Error {response.status_code}: {response.text}")
 
+    st.session_state['year_added'] = True
     st.session_state['activity_to_repeat'] = None
