@@ -78,3 +78,4 @@ if organizers:
             if st.button("Suscribirse", key=organizer['name']):
                 if user_api.organizer_subscribe(organizer_id=organizer['id'], user_id=cookies['user_id']):
                     st.success(f"Genial, te has suscrito a {organizer['name']}")
+                    st.rerun()

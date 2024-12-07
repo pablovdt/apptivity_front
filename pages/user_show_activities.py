@@ -46,10 +46,7 @@ user_activities = user_api.get_user_activities(cookies['user_id'], all=True, is_
 @st.dialog("Información")
 def show_activity_details(item):
     place = place_api.get_place_by_id(item["place_id"])
-    if not place['location_url']:
-        st.write(f'📍 **Lugar**: {place["name"]}')
-    else:
-        st.write(f'📍 **Lugar**: {place["name"]}. **Ubicación**: {place["location_url"]}')
+    st.write(f'📍 **Lugar:** [{place["name"]}]({place["location_url"]})')
 
     st.write(f"♜ **Organizador**: {item['organizer_name']}")
     date_obj = datetime.fromisoformat(item['date'])
