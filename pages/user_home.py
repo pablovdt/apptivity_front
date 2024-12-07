@@ -22,7 +22,8 @@ from api.user_api import user_api
 load_dotenv()
 import time
 
-cookies = EncryptedCookieManager(prefix=os.getenv("APPTIVITY_COOKIES_PREFIX"), password=os.getenv("APPTIVITY_COOKIES_PASSWORD"))
+cookies = EncryptedCookieManager(prefix=os.getenv("APPTIVITY_COOKIES_PREFIX"),
+                                 password=os.getenv("APPTIVITY_COOKIES_PASSWORD"))
 while not cookies.ready():
     time.sleep(0.1)
 user_id = cookies.get("session_uuid")
@@ -35,10 +36,28 @@ if cookies['user_role'] != 'true':
     st.stop()
 
 authenticated_menu(cookies)
+
+
+@st.dialog("Actividad Actualizada")
+def show_update_activity(activity):
+    st.write(f"La actividad **{activity['name']}** ha sido actualizada.")
+    if st.button("Aceptar"):
+        user_api.post_activity_updated_confirmed(user_id=cookies['user_id'], activity_id=activity['activity_id'],
+                                                 updated_confirmed=True)
+        st.rerun()
+
+
+activities_updated = user_api.get_activities_updated(user_id=cookies['user_id'])
+
+if activities_updated:
+    for activity_updated in activities_updated:
+        show_update_activity(activity_updated)
+
 st.header(f"{cookies['user_name']}, tus actividades:")
 
 user_activities = user_api.get_user_activities(cookies['user_id'], all=False,
-                                               date_from=datetime.now(pytz.timezone("Europe/Madrid")).strftime("%Y-%m-%d"))
+                                               date_from=datetime.now(pytz.timezone("Europe/Madrid")).strftime(
+                                                   "%Y-%m-%d"))
 
 
 @st.dialog("Información")

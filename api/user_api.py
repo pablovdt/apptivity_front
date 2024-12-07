@@ -124,7 +124,6 @@ class UserApi(Api):
         else:
             return None
 
-
     def get_subscribe_organizers(self, user_id: int):
 
         url = f"{self.url}{self.endpoint_base}{user_id}/organizers/"
@@ -132,5 +131,24 @@ class UserApi(Api):
         response = requests.get(url=url)
 
         return response.json()
+
+    def get_activities_updated(self, user_id):
+
+        url = f'{self.url}{self.endpoint_base}{user_id}/activities_updated'
+
+        response = requests.get(url=url)
+
+        if response.status_code == 200:
+
+            return response.json()
+        else:
+            return False
+
+    def post_activity_updated_confirmed(self, user_id, activity_id, updated_confirmed: bool):
+
+        url = f"{self.url}{self.endpoint_base}{user_id}/user_activities/{activity_id}?updated_confirmed={updated_confirmed}"
+
+        requests.patch(url)
+
 
 user_api: UserApi = UserApi()
