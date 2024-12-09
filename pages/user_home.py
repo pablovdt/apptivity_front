@@ -62,6 +62,7 @@ user_activities = user_api.get_user_activities(cookies['user_id'], all=False,
 
 @st.dialog("Información")
 def show_activity_details(item):
+    st.write(f"🎟️ **Actividad: {item['name']}**")
     place = place_api.get_place_by_id(item["place_id"])
     st.write(f'📍 **Lugar:** [{place["name"]}]({place["location_url"]})')
 

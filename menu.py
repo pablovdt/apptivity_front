@@ -93,6 +93,7 @@ def authenticated_menu(cookies):
         st.sidebar.page_link("pages/organizer_activities_top_ranking.py", label="🏆 Actividades Top Ranking")
         st.sidebar.page_link("pages/organizer_map.py", label="📍Mapa de Actividades")
         st.sidebar.page_link("pages/statistics.py", label=" 📊 Estadisticas")
+        st.sidebar.page_link("pages/organizer_settings.py", label=" ⚙  Configuración")
 
     elif cookies['user_role'] == 'true':
 
@@ -102,8 +103,10 @@ def authenticated_menu(cookies):
         st.sidebar.page_link("pages/user_activities_top_ranking.py", label="🏆 Actividades Top Ranking")
         st.sidebar.page_link("pages/user_organizers.py", label="🏛️ Organizadores")
         st.sidebar.page_link("pages/user_statistics.py", label=" 📊 Estadisticas")
-        st.sidebar.page_link("pages/user_settings.py", label="⚙ ️Ajustes")
+        st.sidebar.page_link("pages/user_settings.py", label="⚙ Configuración")
 
     st.sidebar.markdown('---')
     st.sidebar.page_link("pages/logout.py", label="↩️  Logout")
+    st.sidebar.markdown('---')
+    st.sidebar.page_link("pages/apptivity_contact.py", label="💬 Apptiviy Contacto")
 
