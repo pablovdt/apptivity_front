@@ -1,13 +1,13 @@
 import streamlit as st
 
-from api.place_api import place_api
-
 st.set_page_config(
     page_title="Apptivity - Configuración-",
     page_icon='images/logotipo_apptivity3.png',
     layout='centered',
     initial_sidebar_state="expanded"
 )
+from api.place_api import place_api
+import pandas as pd
 from menu import login, authenticated_menu
 from collections import Counter
 from api.organizer import organizer_api
@@ -43,9 +43,20 @@ st.subheader("Lugares en tu ciudad")
 
 places_by_city = place_api.get_places_by_id(cookies['organizer_city_id'])
 
-for place in places_by_city:
-    st.write(place['name'])
+# Convertir a DataFrame
+df_places = pd.DataFrame(places_by_city)
 
+# Seleccionar columnas específicas
+df_places = df_places[["name", "location_url"]]
+
+# Cambiar nombres de las columnas
+df_places = df_places.rename(columns={"name": "Nombre", "location_url": "URL de la ubicación"})
+
+# Mostrar tabla sin índice
+st.dataframe(df_places, hide_index=True, use_container_width=True)
+
+for _ in range(3):
+    st.write("")
 
 st.subheader("¿Quieres añadir un nuevo lugar en tu ciudad?")
 
@@ -54,14 +65,21 @@ coordinates = st.text_input("Coordenadas- Latitud, Longitud- ", help="Buscala en
 st.info("Para obtener la latitud y longitud de un lugar, en google maps, haz click derecho en el lugar en cuestión "
         "y verás algo similar a 42.55113680411345, -2.961769755589488")
 
+coordinates = coordinates.replace(", ", ",")
+
 new_place_ubication = f"https://www.google.com/maps?q={coordinates}"
 
-if st.button("Añadir lugar"):
+if coordinates:
+    st.subheader("Comprueba si es correcto y haz click en 'Añadir lugar'")
+    st.write(new_place_ubication)
 
-    if new_place_name and new_place_ubication:
-        if place_api.insert_place(name=new_place_name, location=new_place_ubication, city_id=cookies['organizer_city_id']):
-            st.success("Lugar añadido correctamente")
+    if st.button("Añadir lugar"):
+
+        if new_place_name and new_place_ubication:
+            if place_api.insert_place(name=new_place_name, location=new_place_ubication,
+                                      city_id=cookies['organizer_city_id']):
+                st.success("Lugar añadido correctamente")
+            else:
+                st.error("Error. Intentelo de nuevo mas tarde.")
         else:
-            st.error("Error. Intentelo de nuevo mas tarde.")
-    else:
-        st.warning("Debes rellenar todos los campos")
+            st.warning("Debes rellenar todos los campos")

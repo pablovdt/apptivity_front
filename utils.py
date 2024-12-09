@@ -53,3 +53,49 @@ def save_image(uploaded_file):
     with open(file_path, "wb") as f:
         f.write(uploaded_file.getbuffer())
     return file_path
+
+
+import streamlit as st
+import qrcode
+from io import BytesIO
+from PIL import Image
+
+
+def generate_qr_code(activity_id, organizer_id):
+
+    url = f"192.168.0.23:8501/validate_qr_and_location?activity_id={activity_id}&organizer_id={organizer_id}"
+
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4
+    )
+
+    qr.add_data(url)
+    qr.make(fit=True)
+
+    img = qr.make_image(fill='black', back_color='white')
+
+    buffer = BytesIO()
+    img.save(buffer, format="PNG")
+    buffer.seek(0)
+    return buffer
+
+
+def create_qr_code(activity_id: int, organizer_id:int):
+
+
+    if activity_id and organizer_id:
+
+        qr_image = generate_qr_code(activity_id, organizer_id)
+
+        img = Image.open(qr_image)
+        st.image(img, caption="Código QR Generado", use_column_width=True)
+
+        st.download_button(
+            label="Descargar Código QR",
+            data=qr_image,
+            file_name=f"codigo_qr_act{activity_id}_org{organizer_id}.png",
+            mime="image/png"
+        )

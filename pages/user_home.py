@@ -141,7 +141,7 @@ if user_activities:
                 if row.get('image_path'):
                     st.image(row['image_path'], use_column_width=True)
 
-                if st.button(f"Ver actividad - {row['name']}"):
+                if st.button(f"Ver actividad - {row['name']}", key=index):
                     show_activity_details(row)
 
 

@@ -6,6 +6,7 @@ st.set_page_config(
     layout='centered',
     initial_sidebar_state="expanded"
 )
+from utils import create_qr_code
 from menu import login, authenticated_menu
 import pandas as pd
 from dotenv import load_dotenv
@@ -79,6 +80,11 @@ if activities:
             st.write(f"📅 **Fecha:** {date_obj.strftime('%A, %d de %B de %Y')}")
             st.write(f"🕒 **Hora:** {date_obj.strftime('%H:%M:%S')}")
             st.write(f"💰 **Precio:** {row['price']} €")
+            if float(row['price']) > 0:
+                st.write(f"💰 **Valor esperado**: {row['price'] * row['number_of_possible_assistances']} €" if row[
+                                                                                                                  'number_of_possible_assistances'] > 0 else "💰 **Valor esperado**: 0 €")
+                if date_obj < now:
+                    st.write(f"💰 **Valor real**: {row['price'] * row['number_of_assistances']} €")
             st.write(f"📝 **Descripción:** {row['description']}")
             category = category_api.get_category_by_id(row['category_id'])['name']
             st.write(f"🏷️ **Categoría:** {category}")
@@ -118,17 +124,24 @@ if activities:
 
             st.image(row['image_path'])
 
-            col1, _, col2 = st.columns([2, 2, 2])
+            col1, col2, col3 = st.columns([2, 2, 2])
 
             if date_obj > now:
+
                 with col1:
                     if st.button("Editar Actividad", key=f'edit{i}'):
-                        st.session_state['activity_to_repeat'] = row
+                        st.session_state['activity_to_edit'] = row
                         st.switch_page('pages/update_activity.py')
+
                 with col2:
+                    if st.button("Generar QR", key=f'qr{i}'):
+                        create_qr_code(activity_id=row['id'], organizer_id=int(cookies['organizer_id']))
+
+                with col3:
                     if st.button("Repetir Actividad", key=f'repeat{i}'):
                         st.session_state['activity_to_repeat'] = row
                         st.switch_page('pages/create_activity.py')
+
 
 else:
     st.info("Cuando crees actividades, aparecerán aqui:")

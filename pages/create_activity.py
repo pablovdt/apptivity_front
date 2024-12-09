@@ -6,6 +6,7 @@ st.set_page_config(
     layout='centered',
     initial_sidebar_state="expanded"
 )
+from utils import create_qr_code
 from menu import login, authenticated_menu
 from dotenv import load_dotenv
 import os
@@ -56,5 +57,7 @@ if data:
 
     if response.status_code == 201:
         st.success("Actividad creada exitosamente!")
+
+        create_qr_code(activity_id=response.json()['id'], organizer_id=int(cookies['organizer_id']))
     else:
         st.error(f"Error {response.status_code}: {response.text}")

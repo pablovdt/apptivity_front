@@ -42,7 +42,7 @@ st.markdown("""
 📍 **Dirección:** Calle Ejemplo 123, Ciudad, País  
 📞 **Teléfono:** +34 123 456 789  
 📧 **Correo Electrónico:** [apptivity@mail.com](mailto:apptivity@mail.com)  
-🌐 **Página Web:** [www.apptivity.com](https://www.apptivity.com)
+🌐 **Página Web:** [www.apptivity.com](http://192.168.0.23:8501/apptivity_web)
 """)
 
 st.write("### Envíanos un mensaje")

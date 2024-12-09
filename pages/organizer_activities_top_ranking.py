@@ -126,7 +126,3 @@ with general_tab:
 
                 if row.get('image_path'):
                     st.image(row['image_path'], use_column_width=True)
-
-                if st.button(f"Añadir actividad a Inicio", key=row['id']):
-                    user_api.add_user_activity(user_id=cookies['user_id'], activity_id=row['id'])
-                    st.rerun()

@@ -1,6 +1,7 @@
 import requests
 import json
 from api.api import Api
+
 from utils import verify_hash_password
 
 
@@ -149,6 +150,26 @@ class UserApi(Api):
         url = f"{self.url}{self.endpoint_base}{user_id}/user_activities/{activity_id}?updated_confirmed={updated_confirmed}"
 
         requests.patch(url)
+
+    def validate_qr_and_location(self, activity_id: int, organizer_id: int, user_id: int, latitude: float,
+                                 longitude: float):
+        try:
+            data = {"activity_id": activity_id,
+                    "organizer_id": organizer_id,
+                    "user_id": user_id,
+                    "latitude": latitude,
+                    "longitude": longitude
+                    }
+
+            response = requests.post(
+                url=f'{self.url}{self.endpoint_base}validate_qr_and_location/',
+                headers={"Content-Type": "application/json"},
+                data=json.dumps(data)
+            )
+            return response
+
+        except requests.exceptions.RequestException as e:
+            print(f"Error en la solicitud: {e}")
 
 
 user_api: UserApi = UserApi()
