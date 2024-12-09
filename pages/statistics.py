@@ -1,5 +1,7 @@
 import streamlit as st
 
+from api.city_api import city_api
+
 st.set_page_config(
     page_title="Apptivity - Estadisticas -",
     page_icon='images/logotipo_apptivity3.png',
@@ -88,7 +90,7 @@ if total_possible_assistances > 0:
 else:
     porcentaje_cumplimiento = 0.0
 
-st.header("Categorías de tus actividades:")
+st.header("Categorías de tus actividades")
 if activities:
     for categoria in categorias:
         st.write(categoria)
@@ -106,3 +108,34 @@ if activities:
 
 else:
     st.info("Cuando crees actividades aqui podrás ver porcentajes de asistencia")
+
+organizer_city = city_api.get_city_by_id(cookies['organizer_city_id'])
+organizer_city_name = organizer_city['name']
+
+# todo, añadir turismo de fuera del municipio
+# todo, añadir turismo dentro del municipio
+# st.header(f"Estadisticas de {organizer_city_name}")
+# st.subheader("Número de turistas por mes")
+#
+# city_activities = activiti_api.get_activities_by_city_id(city_id=cookies['organizer_city_id'])
+#
+# if city_activities:
+#
+#     data = []
+#     for activity in city_activities:
+#         data.append({
+#             'date': activity['date'],
+#             'number_of_assistance': activity['number_of_assistances']
+#         })
+#
+#     df = pd.DataFrame(data)
+#
+#     df['month'] = pd.to_datetime(df['date']).dt.to_period('M')
+#
+#     monthly_assistance = df.groupby('month')['number_of_assistance'].sum().reset_index()
+#
+#     monthly_assistance['month'] = monthly_assistance['month'].astype(str)
+#
+#     st.line_chart(monthly_assistance.set_index('month')['number_of_assistance'])
+# else:
+#     st.write(f"No existen actividades en {organizer_city_name}")

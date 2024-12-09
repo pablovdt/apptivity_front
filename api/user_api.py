@@ -171,5 +171,16 @@ class UserApi(Api):
         except requests.exceptions.RequestException as e:
             print(f"Error en la solicitud: {e}")
 
+    def get_user_assistances(self, user_id: int):
+
+        url = f'{self.url}{self.endpoint_base}{user_id}/assistances'
+
+        response = requests.get(url=url)
+
+        if response.status_code == 200:
+
+            return response.json()
+        else:
+            return False
 
 user_api: UserApi = UserApi()

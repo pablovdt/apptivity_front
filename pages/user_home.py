@@ -53,8 +53,48 @@ if activities_updated:
     for activity_updated in activities_updated:
         show_update_activity(activity_updated)
 
-st.header(f"{cookies['user_name']}, tus actividades:")
 
+def get_user_rural_level(value):
+    if 0 <= value <= 20:
+        return "Novato Rural"
+    elif 21 <= value <= 40:
+        return "Explorador Rural"
+    elif 41 <= value <= 60:
+        return "Productor Rural"
+    elif 61 <= value <= 80:
+        return "Agricultor Experto"
+    elif 81 <= value <= 100:
+        return "Líder Rural"
+    elif 101 <= value <= 120:
+        return "Maestro Rural"
+    else:
+        return "Valor fuera de rango"
+
+
+user_rural_levels = {
+    "Novato Rural": "Usuario que está comenzando su experiencia rural, explorando los aspectos más básicos.",
+    "Explorador Rural": "Usuario que ha comenzado a familiarizarse con los aspectos rurales y busca más interacción.",
+    "Productor Rural": "Usuario con conocimientos básicos y experiencia en la producción agrícola y actividades rurales.",
+    "Agricultor Experto": "Usuario avanzado, con habilidades y conocimientos en la agricultura y la vida rural.",
+    "Líder Rural": "Usuario líder en el ámbito rural, capaz de influir y organizar actividades y proyectos rurales.",
+    "Maestro Rural": "Usuario con dominio total de los aspectos rurales, experto en todos los campos relacionados con el área rural."
+}
+
+
+
+
+user_level_value = user_api.get_user_assistances(user_id=int(cookies['user_id']))
+
+user_level = get_user_rural_level(user_level_value)
+col1, _, col2 = st.columns([4,3, 1])
+
+with col1:
+    st.subheader(f"Nivel: {user_level}")
+with col2:
+    st.metric("Puntos", value=user_level_value)
+
+
+st.header(f"{cookies['user_name']}, tus actividades")
 user_activities = user_api.get_user_activities(cookies['user_id'], all=False,
                                                date_from=datetime.now(pytz.timezone("Europe/Madrid")).strftime(
                                                    "%Y-%m-%d"))
@@ -102,6 +142,7 @@ def show_activity_details(item):
             if user_api.update_possible_assistance(user_id=cookies['user_id'], activity_id=item['id'],
                                                    possible_assistance=False):
                 st.rerun()
+
 
 
 if user_activities:

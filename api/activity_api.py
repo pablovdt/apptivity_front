@@ -79,5 +79,18 @@ class ActivityApi(Api):
         except requests.exceptions.RequestException as e:
             print(f"Error en la solicitud: {e}")
 
+    def get_activities_by_city_id(self, city_id):
+        url = f'{self.url}{self.endpoint_base}activities_by_city/?city_id={city_id}'
+        try:
+            response = requests.get(url=url)
+
+            if response.status_code == 200:
+
+                return response.json()
+            else:
+                return False
+
+        except requests.exceptions.RequestException as e:
+            print(f"Error en la solicitud: {e}")
 
 activiti_api: ActivityApi = ActivityApi()
