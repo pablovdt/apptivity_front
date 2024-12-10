@@ -42,6 +42,8 @@ def check_password(cookies, person_email: str, person_password: str):
         cookies['user_city_id'] = str(user_basic_info['city_id'])
         cookies['user_notification_distance'] = str(user_basic_info['notification_distance'])
         cookies['user_categories'] = json.dumps(user_basic_info['categories'])
+        cookies['user_points'] = str(user_basic_info['points'])
+        cookies['user_level_name'] = str(user_basic_info['level_name'])
 
         cookies['user_role'] = 'true'
         cookies['organizer_role'] = 'false'
