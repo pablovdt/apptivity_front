@@ -37,9 +37,9 @@ if cookies['organizer_role'] != 'true':
 
 authenticated_menu(cookies)
 
-st.title("Configuración")
+st.title("Añade nuevos lugares a tu municipio")
 
-st.subheader("Lugares en tu ciudad")
+st.subheader("Lugares en tu municipio")
 
 places_by_city = place_api.get_places_by_id(cookies['organizer_city_id'])
 
@@ -58,7 +58,7 @@ st.dataframe(df_places, hide_index=True, use_container_width=True)
 for _ in range(3):
     st.write("")
 
-st.subheader("¿Quieres añadir un nuevo lugar en tu ciudad?")
+st.subheader("¿Quieres añadir un nuevo lugar en tu municipio?")
 
 new_place_name = st.text_input("Nombre")
 coordinates = st.text_input("Coordenadas- Latitud, Longitud- ", help="Buscala en google maps. Copia y pega")

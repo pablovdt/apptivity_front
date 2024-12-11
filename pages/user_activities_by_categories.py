@@ -38,12 +38,12 @@ authenticated_menu(cookies)
 if cookies['user_role'] != 'true':
     st.stop()
 
-st.header(f"Más actividades basadas en tus categorias...")
+st.header(f"Más actividades", help="Estas actividades no se basan en tus categorias ni en tu distancia de notificacion")
+st.write("¿Quieres conocer que más pasa en Apptivity?")
 
-user_activities = user_api.get_more_activities(user_id=cookies['user_id'], user_categories=cookies['user_categories'])
+user_activities = user_api.get_more_activities(user_id=int(cookies['user_id']))
 
 if user_activities:
-    st.write("¿Quieres editar tus categorias? Modificalo en Ajustes")
 
     df = pd.DataFrame(user_activities)
 
@@ -86,4 +86,4 @@ if user_activities:
                     st.rerun()
 
 else:
-    st.info("Aquí aparecerán actividades de tu interés")
+    st.info("Aquí aparecerán actividades de todo Apptivity")

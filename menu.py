@@ -36,6 +36,8 @@ def check_password(cookies, person_email: str, person_password: str):
     elif user_api.validate_user(user_email=person_email, user_password=person_password):
         user_basic_info = user_api.get_user_basic_info(person_email)
 
+        print(user_basic_info)
+
         cookies['user_id'] = str(user_basic_info['id'])
         cookies['user_name'] = user_basic_info['name']
         cookies['user_email'] = person_email
@@ -43,7 +45,7 @@ def check_password(cookies, person_email: str, person_password: str):
         cookies['user_notification_distance'] = str(user_basic_info['notification_distance'])
         cookies['user_categories'] = json.dumps(user_basic_info['categories'])
         cookies['user_points'] = str(user_basic_info['points'])
-        cookies['user_level_name'] = str(user_basic_info['level_name'])
+        cookies['user_level_name'] = str(user_basic_info['level']['name'])
 
         cookies['user_role'] = 'true'
         cookies['organizer_role'] = 'false'
@@ -60,14 +62,13 @@ def check_password(cookies, person_email: str, person_password: str):
 
 
 def login(cookies):
-    if st.button("Registrate"):
-        st.switch_page("pages/registry.py")
 
-    st.image("images/logotipo_apptivity.png")
 
     _, col, _ = st.columns([1, 3, 1])
 
     with col:
+        st.image("images/logotipo_apptivity.png", width=400)
+
         with st.form(key="login_form"):
             st.subheader("Accede")
             person_login_email = st.text_input("Email:")
@@ -79,6 +80,14 @@ def login(cookies):
                     st.stop()
                 check_password(cookies=cookies, person_email=person_login_email, person_password=person_login_password)
 
+        _, col2, _ = st.columns([1, 4, 1])
+        with col2:
+            with st.container(border=True):
+                st.write("¿Eres nuevo en Apptivity?")
+
+                if st.button("Registrate"):
+                    st.switch_page("pages/registry.py")
+
 
 def authenticated_menu(cookies):
 
@@ -89,22 +98,22 @@ def authenticated_menu(cookies):
     if cookies['organizer_role'] == 'true':
 
         st.sidebar.page_link("app.py", label="🏠 Inicio")
-        st.sidebar.page_link("pages/create_activity.py", label="📝 Crear actividad")
-        st.sidebar.page_link("pages/show_next_activities.py", label="📅  Ver próximas actividades")
-        st.sidebar.page_link("pages/show_activities.py", label="📄 Ver todas las actividades")
-        st.sidebar.page_link("pages/organizer_activities_top_ranking.py", label="🏆 Actividades Top Ranking")
-        st.sidebar.page_link("pages/organizer_map.py", label="📍Mapa de Actividades")
+        st.sidebar.page_link("pages/create_activity.py", label="📝 Crear Actividad")
+        st.sidebar.page_link("pages/show_next_activities.py", label="📅  Actividades Próximas")
+        st.sidebar.page_link("pages/show_activities.py", label="📄 Actividades Realizadas")
+        st.sidebar.page_link("pages/organizer_activities_top_ranking.py", label="🏆 Actividades Destacadas")
+        st.sidebar.page_link("pages/organizer_map.py", label="📍Huella de Origen")
         st.sidebar.page_link("pages/statistics.py", label=" 📊 Estadisticas")
-        st.sidebar.page_link("pages/organizer_settings.py", label=" ⚙  Configuración")
+        # st.sidebar.page_link("pages/organizer_settings.py", label=" ⚙  Configuración")
 
     elif cookies['user_role'] == 'true':
 
         st.sidebar.page_link("app.py", label="🏠 Inicio")
-        st.sidebar.page_link("pages/user_show_activities.py", label="📄 Ver todas tus actividades")
+        st.sidebar.page_link("pages/user_show_activities.py", label="📅 Actividades pasadas")
+        st.sidebar.page_link("pages/user_activities_top_ranking.py", label="🏆 Actividades Destacadas")
         st.sidebar.page_link("pages/user_activities_by_categories.py", label="✚ Ver más actividades")
-        st.sidebar.page_link("pages/user_activities_top_ranking.py", label="🏆 Actividades Top Ranking")
         st.sidebar.page_link("pages/user_organizers.py", label="🏛️ Organizadores")
-        st.sidebar.page_link("pages/user_statistics.py", label=" 📊 Estadisticas")
+        # st.sidebar.page_link("pages/user_statistics.py", label=" 📊 Estadisticas")
         st.sidebar.page_link("pages/user_settings.py", label="⚙ Configuración")
 
     st.sidebar.markdown('---')

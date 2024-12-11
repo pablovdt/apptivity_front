@@ -72,16 +72,21 @@ class UserApi(Api):
     def get_user_basic_info(self, user_email):
         response = requests.get(url=f"{self.url}{self.endpoint_base}user_by_email/{user_email}")
 
+        print(response)
+
         user_basic_info = response.json()
 
         return user_basic_info
 
-    def get_user_activities(self, user_id: int, all: bool, date_from: str = None, is_date_order_asc: bool = None):
+    def get_user_activities(self, user_id: int, all: bool, date_from: str = None, is_date_order_asc: bool = None, date_to=None):
 
         url = f"{self.url}{self.endpoint_base}{user_id}/activities/?all={all}"
 
         if date_from:
             url += f'&date_from={date_from}'
+
+        if date_to:
+            url += f'&date_to={date_to}'
 
         if is_date_order_asc:
             url += f"&is_date_order_asc=true"
@@ -106,16 +111,17 @@ class UserApi(Api):
         else:
             response.raise_for_status()
 
-    def get_more_activities(self, user_id: int, user_categories):
-
-        user_categories_p = json.loads(user_categories)
-
-        user_categories_ids = [cat_id['id'] for cat_id in user_categories_p]
+    def get_more_activities(self, user_id: int, user_categories=None):
 
         url = f"{self.url}{self.endpoint_base}more_activities?user_id={user_id}"
 
-        for category_id in user_categories_ids:
-            url += f"&categories_ids={category_id}"
+        if user_categories:
+            user_categories_p = json.loads(user_categories)
+
+            user_categories_ids = [cat_id['id'] for cat_id in user_categories_p]
+
+            for category_id in user_categories_ids:
+                url += f"&categories_ids={category_id}"
 
         response = requests.get(url=url)
 

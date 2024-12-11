@@ -43,7 +43,7 @@ import pytz
 
 from api.activity_api import activiti_api
 
-activities = activiti_api.get_activities(organizer_id=cookies['organizer_id'])
+activities = activiti_api.get_activities(organizer_id=cookies['organizer_id'], date_from=datetime.now(pytz.timezone("Europe/Madrid")).strftime("%Y-%m-%d"))
 
 
 @st.dialog("Información")
@@ -65,11 +65,14 @@ def show_activity_details(i, row):
         st.write(f"🚫 **CANCELADA !!**")
     colm1, colm2, colm3 = st.columns([2, 2, 2])
     with colm1:
-        st.metric(label=f"👥 **Posibles asistencias:**", value=f"{row['number_of_possible_assistances']}")
+        st.metric(label=f"📤 **Alcance:** ", value=f"{row['number_of_shipments']}",
+                  help="Número de personas a las que se le ha notificado con esta actividad")
     with colm2:
-        st.metric(label=f"📤 **Envios:** ", value=f"{row['number_of_shipments']}")
+        st.metric(label=f"👥 **Asistiré:**", value=f"{row['number_of_possible_assistances']}",
+                  help="Número de personas que han marcado que asistirán a la actividad")
     with colm3:
-        st.metric(label=f"🗑️ **Descartes:**", value=f" {row['number_of_discards']}")
+        st.metric(label=f"🗑️ **No asistiré:**", value=f" {row['number_of_discards']}",
+                  help="Número de personas que han descartado la actividad")
     st.image(row['image_path'])
 
     col1, col2, col3 = st.columns([2, 2, 2])
@@ -86,7 +89,7 @@ def show_activity_details(i, row):
     with col3:
         if st.button("Repetir Actividad", key=f'repeat{i}'):
             st.session_state['activity_to_repeat'] = row
-            st.switch_page('pages/create_activity.py')
+            st.switch_page('pages/repeat_activity.py')
 
 
 def parse_date(date_str):
@@ -210,38 +213,43 @@ for year, months in sorted(activities_by_year.items()):
             for i, activity in enumerate(activities_in_day):
 
                 col1, col2 = st.columns([6, 1])
-                with col1:
-                    date_obj = datetime.fromisoformat(activity["date"])
-                    time_str = date_obj.strftime('%H:%M')
+                # with col1:
+                date_obj = datetime.fromisoformat(activity["date"])
+                time_str = date_obj.strftime('%H:%M')
 
-                    div_html = f"""
-                        <div style="border: 2px solid #82b29a; border-radius: 1em; padding: 7px; margin: 10px;
-                                    background-color: #323232; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center;">
-                            <p style="font-size: 18px; color: #F3E8EB; font-weight: bold;">{time_str}</p>
-                            <p style="font-size: 20px; color: #F3E8EB; font-weight: 600;">{activity['name']}</p>
-                        </div>
-                    """
+                # div_html = f"""
+                #     <div style="border: 2px solid #82b29a; border-radius: 1em; padding: 7px; margin: 10px;
+                #                 background-color: #323232; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center;">
+                #         <p style="font-size: 18px; color: #F3E8EB; font-weight: bold;">{time_str}</p>
+                #         <p style="font-size: 20px; color: #F3E8EB; font-weight: 600;">{activity['name']}</p>
+                #     </div>
+                # """
+                #
+                # st.markdown(div_html, unsafe_allow_html=True)
 
-                    st.markdown(div_html, unsafe_allow_html=True)
+                # with col2:
+                st.markdown("""
+                    <style>
+                        .stButton>button {
+                            background-color: #323232;
+                            color: white;
+                            padding: 20px;  /* Ajuste de padding */
+                            font-size: 20px;  /* Tamaño de la fuente */
+                            border-radius: 1em;  /* Bordes redondeados */
+                            border: solid;  /* Sin borde */
+                            cursor: pointer;  /* Cambia el cursor al pasar sobre el botón */
+                            width: 100%;  /* El botón ocupa todo el ancho */
+                            font-size: 32px;  /* Tamaño de fuente grande */
+                            display: flex;
+                            justify-content: center;  /* Centra el texto horizontalmente */
+                            align-items: center;  /* Centra el texto verticalmente */
+                        }
+                        .stButton>button:hover {
+                            background-color: #F3E8EB;  /* Color de fondo cuando el mouse pasa sobre el botón */
+                        }
+                    </style>
+                """, unsafe_allow_html=True)
 
-                with col2:
-                    st.markdown("""
-                        <style>
-                            .stButton>button {
-                                background-color: #82b29a;
-                                color: white;
-                                padding: 40px;  /* Aumenta el tamaño del botón */
-                                font-size: 18px;  /* Aumenta el tamaño de la fuente */
-                                border-radius: 1em;  /* Bordes redondeados */
-                                border: none;  /* Sin borde */
-                                cursor: pointer;  /* Cambia el cursor al pasar sobre el botón */
-                            }
-                            .stButton>button:hover {
-                                background-color: #F3E8EB;  /* Color de fondo cuando el mouse pasa sobre el botón */
-                            }
-                        </style>
-                    """, unsafe_allow_html=True)
-
-                    # Crear el botón con Streamlit
-                    if st.button("Ver Actividad", key=f"{activity['name']}-{i}"):
-                        show_activity_details(i, activity)
+                # Crear el botón con Streamlit
+                if st.button(f"{time_str} -- {activity['name']}", key=f"{activity['name']}-{i}"):
+                    show_activity_details(i, activity)

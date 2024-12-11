@@ -35,8 +35,11 @@ if cookies['organizer_role'] != 'true':
 
 authenticated_menu(cookies)
 
-st.title("Consulta de donde procede tu turismo")
-st.write("Basado en los municipios de los usuarios que asisten a tus actividades")
+st.title("Huella de Origen")
+st.subheader("Consulta de los municipios de los usuarios interesados en tus actividades")
+st.write("Basado en los municipios de las personas que han mostrado interés o han confirmado su asistencia a tus actividades")
+
+
 
 user_coordinates = organizer_api.get_user_coordinates(cookies['organizer_id'])
 

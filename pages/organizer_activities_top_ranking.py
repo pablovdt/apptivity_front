@@ -47,9 +47,9 @@ organizer_activities = activiti_api.get_activities(organizer_id=cookies['organiz
 general_activities = activiti_api.get_activities(date_from=datetime.now(pytz.timezone("Europe/Madrid")).strftime("%Y-%m-%d"), cancelled=False,
                                                  order_by_assistance=True, limit=10)
 
-st.title('🔥 Ranking de Eventos Populares 🔥')
+st.title("Actividades Destacadas")
 
-organizer_tab, general_tab = st.tabs([f"{cookies['organizer_name']} top ranking", "General Top Ranking"])
+organizer_tab, general_tab = st.tabs([f"Destacadas {cookies['organizer_name']}", "Destacadas Otros"])
 
 with organizer_tab:
     for _ in range(3):
@@ -57,14 +57,11 @@ with organizer_tab:
 
     if organizer_activities:
 
-        st.subheader("Tus Top Ranking")
+        st.subheader("Tus Destacadas")
 
-        st.markdown("""
-        Aquí tienes tus 10 Actividades más populares según las asistencias registradas.
-        ¡Descubre las actividades que están atrayendo a más personas!
+        st.markdown(f"""
+        ¡Descubre las actividades creadas por {cookies['organizer_name']} que están atrayendo a más personas!
         """)
-
-        st.markdown('#### Actividades más Populares por Asistencias:')
 
         df = pd.DataFrame(organizer_activities)
 
@@ -86,6 +83,9 @@ with organizer_tab:
 
                 st.write(f"💰 {row['price']} €")
 
+                st.metric(label=f"👥 **Asistiré:**", value=f"{row['number_of_possible_assistances']}",
+                          help="Número de personas que han marcado que asistirán a la actividad")
+
                 if row.get('image_path'):
                     st.image(row['image_path'], use_column_width=True)
 
@@ -95,14 +95,13 @@ with general_tab:
 
     if general_activities:
 
-        st.subheader("Top Ranking de todo Apptivity")
+        st.subheader("Destacadas de Otros Organizadores")
 
         st.markdown("""
-        Aquí tienes las 10 Actividades más populares según las asistencias registradas.
-        ¡Descubre los eventos que están atrayendo a más personas!
+        ¡Descubre las actividades  que están atrayendo a más personas en todo Apptivity!
         """)
 
-        st.markdown('#### Actividades más Populares por Asistencias:')
+
 
         df = pd.DataFrame(general_activities)
 

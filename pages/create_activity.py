@@ -50,14 +50,16 @@ activity = {
     "cancelled": False
 }
 
-data = activity_input_form(activity=activity, cookies=cookies)
+data = activity_input_form(activity=activity, cookies=cookies, button_text="Crear Actividad")
 
 if data:
     response = activiti_api.create_activity(activity=data)
 
     if response.status_code == 201:
         st.success("Actividad creada exitosamente!")
-
+        st.header("Descárgate el codigo QR de la actividad")
+        st.write("Deberás imprimirlo y llevarlo al lugar de la activiad para que los usuarios puedan confirmar su asistencia")
         create_qr_code(activity_id=response.json()['id'], organizer_id=int(cookies['organizer_id']))
+
     else:
         st.error(f"Error {response.status_code}: {response.text}")

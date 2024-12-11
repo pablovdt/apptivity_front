@@ -58,10 +58,15 @@ col1, _, col2 = st.columns([4, 3, 1])
 with col1:
     st.subheader(f"Nivel: {cookies['user_level_name']}",
                  help="Asiste a actividades para ganar puntos y subir al siguiente nivel")
+
 with col2:
     st.metric("Puntos", value=cookies['user_points'])
 
-st.header(f"{cookies['user_name']}, tus actividades")
+st.write("---")
+
+
+st.header(f"{cookies['user_name']}, tus actividades",
+          help="Aqui se muestran actividades basandose en tus categorías y en tu radio de notificación. (Puedes cambiarlo en la seccion ⚙ Configuración)")
 user_activities = user_api.get_user_activities(cookies['user_id'], all=False,
                                                date_from=datetime.now(pytz.timezone("Europe/Madrid")).strftime(
                                                    "%Y-%m-%d"))

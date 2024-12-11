@@ -102,9 +102,11 @@ if activities:
     col1, col2 = st.columns([2, 2])
 
     with col1:
-        st.metric(label="Porcentaje de asistencia", value=f"{porcentaje_asistencia:.1f}%", delta=None)
+        st.metric(label="Porcentaje de asistencia", value=f"{porcentaje_asistencia:.1f}%", delta=None,
+                  help="Personas que asistieron a la actividad / Personas a las que le llego la actividad")
     with col2:
-        st.metric(label="Porcentaje de cumplimiento", value=f"{porcentaje_cumplimiento:.1f}%", delta=None)
+        st.metric(label="Porcentaje de cumplimiento", value=f"{porcentaje_cumplimiento:.1f}%", delta=None,
+                  help="Personas que asistieron a la actividad / Personas que marcaron que si asistirían")
 
 else:
     st.info("Cuando crees actividades aqui podrás ver porcentajes de asistencia")

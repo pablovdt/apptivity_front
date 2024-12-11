@@ -1,5 +1,5 @@
 [client]
-
+showErrorDetails = false
 showSidebarNavigation = false
 
 [theme]

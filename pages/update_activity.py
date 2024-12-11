@@ -39,7 +39,7 @@ if st.session_state['activity_to_edit'] is not None:
 
     st.title("Edita la Actividad")
 
-    data = activity_input_form(activity=st.session_state['activity_to_edit'],  cookies=cookies)
+    data = activity_input_form(activity=st.session_state['activity_to_edit'],  cookies=cookies, button_text="Editar Actividad")
 
     if data:
         response = activiti_api.update_activity(activity=data, activity_id=st.session_state['activity_to_edit']['id'])

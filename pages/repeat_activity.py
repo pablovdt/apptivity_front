@@ -43,7 +43,8 @@ if not st.session_state['year_added']:
     st.session_state['activity_to_repeat']['date'] = str(add_one_year(datetime.fromisoformat(st.session_state['activity_to_repeat']['date'])))
     st.session_state['year_added'] = True
 
-data = activity_input_form(activity=st.session_state['activity_to_repeat'], cookies=cookies)
+
+data = activity_input_form(activity=st.session_state['activity_to_repeat'], cookies=cookies, button_text="Repetir Actividad")
 
 if data:
     response = activiti_api.create_activity(activity=data)

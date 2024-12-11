@@ -45,18 +45,16 @@ if cookies['user_role'] != 'true':
     st.stop()
 
 
+st.title('Actividades Destacadas')
+
+st.markdown("""
+¡Descubre los eventos que están atrayendo a más personas!
+""")
+
+
 activities = activiti_api.get_activities(date_from=datetime.now(pytz.timezone("Europe/Madrid")).strftime("%Y-%m-%d"), cancelled=False,
                                          order_by_assistance=True, limit=10)
 if activities:
-
-    st.title('🔥 Ranking de Eventos Populares 🔥')
-
-    st.markdown("""
-    Aquí tienes las 10 Actividades más populares según las asistencias registradas.
-    ¡Descubre los eventos que están atrayendo a más personas!
-    """)
-
-    st.markdown('#### Actividades más Populares por Asistencias:')
 
     df = pd.DataFrame(activities)
 

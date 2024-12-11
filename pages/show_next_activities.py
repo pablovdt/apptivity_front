@@ -37,7 +37,7 @@ if cookies['organizer_role'] != 'true':
 
 authenticated_menu(cookies)
 
-st.title('Gestiona actividades futuras')
+st.title('Gestiona actividades próximas')
 
 st.subheader('Filtros:')
 col1, col2, col3 = st.columns([2, 2, 2])
@@ -47,13 +47,14 @@ with col2:
     cancelled = st.toggle('Cancelada', value=False)
 with col3:
     places: list = place_api.get_places_by_id(cookies['organizer_city_id'])
-    places_options = {"": ""}
+    places_options = {"Todos": ""}
     places_options.update({place["name"]: place["id"] for place in places})
     place_selected_name = st.selectbox("Selecciona un lugar", places_options.keys())
     place_id = places_options[place_selected_name]
 
 activities = activiti_api.get_activities(organizer_id=cookies['organizer_id'],
-                                         date_from=datetime.now(pytz.timezone("Europe/Madrid")).strftime("%Y-%m-%d"), activity_name=input_name,
+                                         date_from=datetime.now(pytz.timezone("Europe/Madrid")).strftime("%Y-%m-%d"),
+                                         activity_name=input_name,
                                          place_id=place_id, cancelled=cancelled)
 
 df = pd.DataFrame(activities)
@@ -71,7 +72,7 @@ if activities:
             st.write(f"🕒 **Hora:** {date_obj.strftime('%H:%M')}")
             st.write(f"💰 **Precio:** {row['price']} €")
             if float(row['price']) > 0:
-                st.write(f"💰 **Valor esperado**: {row['price'] * row['number_of_possible_assistances']} €")
+                st.write(f"💰 **Valor esperado**: {float(row['price'] )* float(row['number_of_possible_assistances'])} €")
             st.write(f"📝 **Descripción:** {row['description']}")
             category = category_api.get_category_by_id(row['category_id'])['name']
             st.write(f"🏷️ **Categoría:** {category}")
@@ -79,11 +80,14 @@ if activities:
                 st.write(f"🚫 **CANCELADA !!**")
             colm1, colm2, colm3 = st.columns([2, 2, 2])
             with colm1:
-                st.metric(label=f"👥 **Posibles asistencias:**", value=f"{row['number_of_possible_assistances']}")
+                st.metric(label=f"📤 **Alcance:** ", value=f"{row['number_of_shipments']}",
+                          help="Número de personas a las que se le ha notificado con esta actividad")
             with colm2:
-                st.metric(label=f"📤 **Envios:** ", value=f"{row['number_of_shipments']}")
+                st.metric(label=f"👥 **Asistiré:**", value=f"{row['number_of_possible_assistances']}",
+                          help="Número de personas que han marcado que asistirán a la actividad")
             with colm3:
-                st.metric(label=f"🗑️ **Descartes:**", value=f" {row['number_of_discards']}")
+                st.metric(label=f"🗑️ **No asistiré:**", value=f" {row['number_of_discards']}",
+                          help="Número de personas que han descartado la actividad")
             st.image(row['image_path'])
 
             col1, col2, col3 = st.columns([2, 2, 2])
@@ -93,15 +97,15 @@ if activities:
                     st.session_state['activity_to_edit'] = row
                     st.switch_page('pages/update_activity.py')
 
-            with col2:
+            with col3:
                 if st.button("Generar QR", key=f'qr{i}'):
                     create_qr_code(activity_id=row['id'], organizer_id=int(cookies['organizer_id']))
 
-            with col3:
-                if st.button("Repetir Actividad", key=f'repeat{i}'):
-                    st.session_state['activity_to_repeat'] = row
-                    st.switch_page('pages/create_activity.py')
+            # with col3:
+            #     if st.button("Repetir Actividad", key=f'repeat{i}'):
+            #         st.session_state['activity_to_repeat'] = row
+            #         st.switch_page('pages/repeat_activity.py')
 
 
 else:
-    st.info("Cuando crees actividades, aparecerán aqui:")
+    st.info("Ninguna actividad coincide con los filtros de búsqueda")

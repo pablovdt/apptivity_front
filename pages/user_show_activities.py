@@ -37,10 +37,9 @@ if cookies['user_role'] != 'true':
 
 authenticated_menu(cookies)
 
-st.header(f"{cookies['user_name']}, todas tus actividades:")
-st.write("Aqui verás todas tus actividades, eliminadas, que ya han finzalizado...")
+st.header(f"{cookies['user_name']}, tus actividades pasadas", help="Aqui puedes ver las actividades que se mostraron en tu inicio")
 
-user_activities = user_api.get_user_activities(cookies['user_id'], all=True, is_date_order_asc=False)
+user_activities = user_api.get_user_activities(cookies['user_id'], all=True, is_date_order_asc=False, date_to=now.date())
 
 
 @st.dialog("Información")
@@ -133,4 +132,4 @@ if user_activities:
 
 
 else:
-    st.info("Aquí aparecerán tus actividades")
+    st.info("Aquí aparecerán tus actividades pasadas")

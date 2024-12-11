@@ -10,7 +10,7 @@ from utils import add_one_year, save_image
 madrid_tz = pytz.timezone('Europe/Madrid')
 
 
-def activity_input_form(activity, cookies):
+def activity_input_form(activity, cookies, button_text):
 
     places: list = place_api.get_places_by_id(cookies['organizer_city_id'])
     places_options = {place["name"]: place["id"] for place in places}
@@ -31,6 +31,18 @@ def activity_input_form(activity, cookies):
         name = st.text_input("Nombre", value=activity['name'])
         place_selected_name = st.selectbox("Selecciona un lugar", places_options.keys(),
                                            index=list(places_options.keys()).index(place_selected_name))
+
+        st.markdown("""
+            <a href="organizer_settings" target="_self" style="
+                font-size: 14px; 
+                border-radius: 1em; 
+                text-align: center; 
+                display: block;
+                text-decoration: none; 
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                ¿El lugar que deseas no se encuentra en la lista?
+            </a>
+        """, unsafe_allow_html=True)
 
         place_id = places_options[place_selected_name]
 
@@ -62,7 +74,7 @@ def activity_input_form(activity, cookies):
         else:
             image_path = activity['image_path'] if activity['image_path'] else "images/logotipo_apptivity.png"
 
-        submit_button = st.form_submit_button("Enviar")
+        submit_button = st.form_submit_button(button_text)
 
         combined_datetime = datetime.combine(date, time)
         localized_datetime = madrid_tz.localize(combined_datetime)
