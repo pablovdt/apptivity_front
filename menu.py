@@ -67,7 +67,8 @@ def login(cookies):
     _, col, _ = st.columns([1, 3, 1])
 
     with col:
-        st.image("images/APPTIVITY_cutted.png", width=400)
+
+        st.image("images/APPTIVITY_cutted.png", use_column_width=True)
 
         with st.form(key="login_form"):
             st.subheader("Accede")

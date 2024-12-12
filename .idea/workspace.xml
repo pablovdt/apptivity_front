@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3455f86-bac7-44eb-950e-bd75bfa8748c" name="Changes" comment="fix: add images in dockerfile">
+    <list default="true" id="e3455f86-bac7-44eb-950e-bd75bfa8748c" name="Changes" comment="fix: in backend url">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/city_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/city_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/registry.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/registry.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,19 +35,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.city_bot.executor&quot;: &quot;Run&quot;,
-    &quot;Python.cookies_trial.executor&quot;: &quot;Run&quot;,
-    &quot;Python.date_trial.executor&quot;: &quot;Run&quot;,
-    &quot;Python.insert_data_in_db.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/pablo/PycharmProjects/apptivity&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Language Defaults&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.city_bot.executor": "Run",
+    "Python.cookies_trial.executor": "Run",
+    "Python.date_trial.executor": "Run",
+    "Python.insert_data_in_db.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/pablo/PycharmProjects/apptivity_front",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Language Defaults"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -305,12 +306,26 @@
       <option name="project" value="LOCAL" />
       <updated>1733996435716</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="fix: add images in dockerfile 2">
+      <option name="closed" value="true" />
+      <created>1733997845953</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1733997845953</updated>
+    </task>
+    <task id="LOCAL-00031" summary="fix: in backend url">
+      <option name="closed" value="true" />
+      <created>1733999760146</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1733999760146</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: add organizer images and location in place or city" />
-    <MESSAGE value="feat: improving...ad statistics..." />
     <MESSAGE value="fix: import activity_api" />
     <MESSAGE value="feat: add user_activity functionally" />
     <MESSAGE value="feat: improving in user home" />
@@ -334,6 +349,8 @@
     <MESSAGE value="feat: add dockerfile and little changes" />
     <MESSAGE value="fix: add images to deploy" />
     <MESSAGE value="fix: add images in dockerfile" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: add images in dockerfile" />
+    <MESSAGE value="fix: add images in dockerfile 2" />
+    <MESSAGE value="fix: in backend url" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: in backend url" />
   </component>
 </project>

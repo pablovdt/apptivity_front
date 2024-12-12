@@ -10,6 +10,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+
+
 from api.city_api import city_api
 from api.organizer import organizer_api
 from utils import save_image, hash_password
@@ -19,7 +21,7 @@ for _ in range(2):
     st.sidebar.text('')
 st.sidebar.page_link("app.py", label="🏠 Inicio")
 
-st.image("images/APPTIVITY_cutted.png", width=650)
+st.image("images/APPTIVITY_cutted.png", use_column_width=True)
 
 cities: list = city_api.get_cities()
 cities_options = {city["name"]: city["id"] for city in cities}
