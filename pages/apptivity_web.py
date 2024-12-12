@@ -9,52 +9,61 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Encabezado con imagen
-st.image("images/logotipo_apptivity.png", use_column_width=True)
-st.title("🌍 Bienvenido a Apptivity")
-st.subheader("Conéctate con lo mejor de La Rioja: actividades, eventos y mucho más.")
+st.image("images/APPTIVITY_cutted.png", use_column_width=True)
+# st.title("🌍 Bienvenido a Apptivity")
+st.subheader("Conéctate con lo mejor de La Rioja")
 
 st.markdown("""
 ### ¿Qué hace Apptivity?
 
-Apptivity es la aplicación definitiva para fomentar el **turismo interno en La Rioja**. Diseñada tanto para usuarios como para organizadores de actividades, ofrece una plataforma sencilla y poderosa para descubrir, gestionar y participar en actividades turísticas locales. 
+Apptivity es la aplicación definitiva para fomentar el **turismo en La Rioja**. Diseñada tanto para usuarios como 
+para organizadores de actividades, ofrece una plataforma sencilla y poderosa para descubrir, gestionar y participar
+en actividades turísticas locales. 
 
-- **Para los usuarios:** Apptivity te mantiene al tanto de todas las actividades que más te interesan en La Rioja. Desde festivales de vino, rutas gastronómicas, hasta actividades al aire libre en la naturaleza. Personaliza tus notificaciones para recibir alertas según tus preferencias, como la distancia y el tipo de actividad.
+- **Para los usuarios:** Apptivity te mantiene al tanto de todas las actividades que más te interesan en La Rioja.
+ Desde degustaciones, rutas, conciertos, festivales de vino, actividades al aire libre.
+ Personaliza tus notificaciones para recibir alertas según tus preferencias, como la distancia y el tipo de actividad.
 
-- **Para los organizadores:** Si eres responsable de actividades turísticas o eventos en La Rioja, Apptivity es tu mejor aliado. Podrás gestionar tus actividades, promocionarlas a un público local, acceder a estadísticas detalladas sobre el interés en tus eventos y mucho más.
+- **Para los organizadores:** Si eres responsable de actividades turísticas o eventos en La Rioja, Apptivity es tu
+ mejor aliado. Podrás gestionar tus actividades, promocionarlas a un público local, acceder a estadísticas detalladas
+  sobre el interés en tus eventos y mucho más.
 
 ---
 
 ### ¿Cómo funciona Apptivity?
 
-- 📍 **Descubre actividades cercanas:** Apptivity utiliza la geolocalización para mostrarte eventos y actividades cerca de tu ubicación. Tú decides la distancia a la que quieres recibir las notificaciones.
-- 🕵️‍♂️ **Filtra por tus intereses:** Ya sea que te guste el vino, la gastronomía, el senderismo o los festivales, puedes elegir qué tipo de actividades te interesan para recibir alertas personalizadas.
-- 📅 **Gestiona tus planes:** Apptivity te permite agregar actividades a tu calendario, gestionar tu tiempo y hacer que tu estgancia a La Rioja sea aún más memorable.
-- 🔔 **Notificaciones personalizadas:** Recibe alertas sobre eventos, promociones y noticias importantes de los lugares que más te interesan. Personaliza el radio de distancia para estar al tanto de lo que sucede cerca de ti.
+- 📍 **Descubre actividades cercanas:** Apptivity utiliza la geolocalización para mostrarte eventos y actividades 
+    cerca de tu ubicación. Tú decides la distancia a la que quieres recibir las notificaciones.
+- 🕵️‍♂️ **Filtra por tus intereses:** Ya sea que te guste el vino, la gastronomía, el senderismo o los festivales, 
+    puedes elegir qué tipo de actividades te interesan para recibir alertas personalizadas.
+- 🔔 **Notificaciones personalizadas:** Recibe actividades de los lugares que más te interesan. Personaliza el radio
+        de distancia para estar al tanto de lo que sucede cerca de ti.
 
 ---
 
-### Características principales de Apptivity:
+### ¿Eres usuario? :
 
-- **Notificaciones personalizadas:** Puedes ajustar la distancia de las alertas para recibir información de actividades a la distancia que desees.
-- **Mapa interactivo:** Explora La Rioja y descubre todas las actividades que están sucediendo en tiempo real. Usa nuestro mapa interactivo para ver eventos, festivales y lugares de interés.
-- **Calendario de eventos:** Consulta el calendario con todos los eventos programados. Desde conciertos, rutas turísticas, actividades deportivas, hasta mercados locales.
-- **Promociones y ofertas exclusivas:** Obtén acceso a descuentos y promociones especiales para turistas y residentes de La Rioja.
-- **Interacción directa con organizadores:** Los usuarios pueden contactar directamente con los organizadores de actividades para obtener más detalles o hacer reservas.
+- **Actividades sobre tus intereses** 
+- **Norificaciones sobre cambios en actividades** 
+- **Actividades más demandadas**
+- **¿Quieres algo nuevo? Más actividades**
+- **Promociones y ofertas exclusivas** 
+
 
 ---
 
-### Para organizadores de actividades turísticas:
+### ¿Eres organizador?:
 
-- 📊 **Estadísticas detalladas:** Accede a estadísticas sobre la participación en tus actividades, incluyendo la cantidad de usuarios interesados, la ubicación de los participantes y el rendimiento de tus eventos.
-- 📝 **Gestión de eventos:** Crea y gestiona eventos fácilmente desde la app. Añade información, imágenes y detalles para atraer más visitantes.
-- 📲 **Promociona tus actividades:** Llega a una audiencia más amplia mediante nuestras notificaciones personalizadas y nuestro mapa interactivo. Puedes promocionar tu evento a los usuarios cercanos y aumentar la visibilidad.
-- 💬 **Interacción directa con los usuarios:** Los organizadores pueden recibir mensajes, preguntas y reservas directamente desde la app.
+- **Crea actividades de forma sencilla** 
+- **LLega a un gran número de personas** 
+- **Gestióna las actividades comodamente**
+- **Estadísticas detalladas:** 
+- **Consulta de donde procede tu turismo** 
 
 ---
 
 """)
-
+st.title("Difunde tu actividad en toda La Rioja")
 latitudes = [
     42.5663460958579, 42.4362228354874, 41.9536806059926, 0.0, 42.3652087121677,
     42.4000988625693, 42.4042978479629, 42.2291365184681, 42.4239310584127, 42.4076250619403,
@@ -150,7 +159,6 @@ with st.form("contact_form"):
     if submitted:
         st.success(f"Gracias por contactarnos, {name}. Nos pondremos en contacto contigo pronto.")
 
-
 st.markdown("""
     <style>
         .btn-custom {
@@ -178,5 +186,6 @@ st.title("Bienvenido a Apptivity")
 st.write("Haz clic en el botón para comenzar tu experiencia.")
 
 # Botón atractivo con estilo
-if st.button("Quiero usar Apptivity", key="use_app", help="Haz clic para empezar a usar Apptivity", use_container_width=True):
+if st.button("Quiero usar Apptivity", key="use_app", help="Haz clic para empezar a usar Apptivity",
+             use_container_width=True):
     st.switch_page("app.py")

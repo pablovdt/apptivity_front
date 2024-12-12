@@ -67,7 +67,7 @@ def login(cookies):
     _, col, _ = st.columns([1, 3, 1])
 
     with col:
-        st.image("images/logotipo_apptivity.png", width=400)
+        st.image("images/APPTIVITY_cutted.png", width=400)
 
         with st.form(key="login_form"):
             st.subheader("Accede")
@@ -91,9 +91,9 @@ def login(cookies):
 
 def authenticated_menu(cookies):
 
-    st.sidebar.image("images/logotipo_apptivity2.png")
-    for _ in range(2):
-        st.sidebar.text('')
+    st.sidebar.image("images/APPTIVITY(2)_cutted.png")
+
+    st.sidebar.write("")
 
     if cookies['organizer_role'] == 'true':
 
@@ -120,4 +120,7 @@ def authenticated_menu(cookies):
     st.sidebar.page_link("pages/logout.py", label="↩️  Logout")
     st.sidebar.markdown('---')
     st.sidebar.page_link("pages/apptivity_contact.py", label="💬 Apptiviy Contacto")
+
+
+
 

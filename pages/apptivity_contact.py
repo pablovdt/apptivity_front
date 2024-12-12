@@ -33,7 +33,7 @@ if user_id is None:
 
 authenticated_menu(cookies)
 
-st.image("images/logotipo_apptivity.png")
+st.sidebar.image("images/APPTIVITY(2).png")
 
 # Ficha de contacto
 st.write("### Información de Contacto")

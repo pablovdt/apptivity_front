@@ -193,7 +193,7 @@ for year, months in sorted(activities_by_year.items()):
     with st.container():
         st.markdown(
             f"""
-            <div style="background-color: #82b29a; padding: 2px; margin:20px; border-radius:1em; text-align:center;">
+            <div style="background-color: #0ab998; padding: 2px; margin:20px; border-radius:1em; text-align:center;">
                 <h2>{year}</h2>
             </div>
             """,
@@ -244,11 +244,13 @@ for year, months in sorted(activities_by_year.items()):
                             justify-content: center;  /* Centra el texto horizontalmente */
                             align-items: center;  /* Centra el texto verticalmente */
                         }
-                        .stButton>button:hover {
-                            background-color: #F3E8EB;  /* Color de fondo cuando el mouse pasa sobre el botón */
-                        }
+
                     </style>
                 """, unsafe_allow_html=True)
+
+                #                         .stButton>button:hover {
+                #                             background-color: #32e898;  /* Color de fondo cuando el mouse pasa sobre el botón */
+                #                         }
 
                 # Crear el botón con Streamlit
                 if st.button(f"{time_str} -- {activity['name']}", key=f"{activity['name']}-{i}"):

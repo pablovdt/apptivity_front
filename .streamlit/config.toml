@@ -7,14 +7,20 @@ showSidebarNavigation = false
 base = "dark"
 
 # Primary accent color for interactive elements.
-primaryColor = "#82b29a"
-
+# primaryColor = "#82b29a"
+primaryColor = "#dbf300"
 # Background color for the main content area.
 backgroundColor = "#000000"
 
 # Background color used for the sidebar and most interactive widgets.
 secondaryBackgroundColor = "#323232"
 
+
 # Color used for almost all text.
 textColor = "#F3E8EB"
 
+
+# colores logo apptivity
+# verde: #63be00
+# amarillo: #dbf300
+# verde_clarito: #82b29a
