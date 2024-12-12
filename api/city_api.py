@@ -9,7 +9,7 @@ class CityApi(Api):
     def get_cities(self):
         try:
             response = requests.get(url=f"{self.url}{self.endpoint_base}cities")
-
+            print(f"{self.url}{self.endpoint_base}cities")
             return response.json()
 
         except requests.exceptions.RequestException as e:
