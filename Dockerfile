@@ -4,6 +4,8 @@ WORKDIR /apptivity_front
 
 COPY . /apptivity_front
 
+COPY ./images /app/images
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 8501
