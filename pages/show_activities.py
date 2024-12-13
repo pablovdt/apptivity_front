@@ -44,7 +44,7 @@ if 'activity_to_repeat' not in st.session_state:
 
 import locale
 
-locale.setlocale(locale.LC_TIME, 'es_ES')
+# locale.setlocale(locale.LC_TIME, 'es_ES')
 
 st.title('Gestiona actividades realizadas')
 
@@ -64,7 +64,7 @@ with col3:
 
 activities = activiti_api.get_activities(organizer_id=cookies['organizer_id'], is_date_order_asc=False,
                                          activity_name=input_name, place_id=place_id,
-                                         cancelled=cancelled, date_to=now.date())
+                                         cancelled=cancelled, date_to=datetime.now(pytz.timezone("Europe/Madrid")).strftime("%Y-%m-%d"))
 
 df = pd.DataFrame(activities)
 
