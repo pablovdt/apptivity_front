@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Apptivity",
-    page_icon='images/logotipo_apptivity3.png',
+    page_icon='images/APPTIVITY3.png',
     layout='wide',
     initial_sidebar_state="expanded"
 )

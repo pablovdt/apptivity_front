@@ -4,7 +4,7 @@ from api.place_api import place_api
 
 st.set_page_config(
     page_title="Apptivity - Contacto -",
-    page_icon='images/logotipo_apptivity3.png',
+    page_icon='images/APPTIVITY3.png',
     layout='centered',
     initial_sidebar_state="expanded"
 )
