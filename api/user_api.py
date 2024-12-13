@@ -72,8 +72,6 @@ class UserApi(Api):
     def get_user_basic_info(self, user_email):
         response = requests.get(url=f"{self.url}{self.endpoint_base}user_by_email/{user_email}")
 
-        print(response)
-
         user_basic_info = response.json()
 
         return user_basic_info

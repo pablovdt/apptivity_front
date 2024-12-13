@@ -62,6 +62,7 @@ with col1:
 with col2:
     st.metric("Puntos", value=cookies['user_points'])
 
+
 st.write("---")
 
 

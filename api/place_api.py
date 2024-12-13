@@ -13,7 +13,6 @@ class PlaceApi(Api):
                 "city_id": city_id,
                 "location_url": location
             }
-            print(json.dumps(data))
             response = requests.post(
                 f"{self.url}{self.endpoint_base}create_place/",
                 headers={"Content-Type": "application/json"},

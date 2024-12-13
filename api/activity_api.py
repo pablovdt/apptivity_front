@@ -9,7 +9,7 @@ class ActivityApi(Api):
     def create_activity(self, activity: dict):
         try:
             response = requests.post(
-                'http://localhost:8000/activities/create_activity/',
+                f'{self.url}{self.endpoint_base}create_activity/',
                 headers={"Content-Type": "application/json"},
                 data=json.dumps(activity)  # Convertir a JSON
             )
@@ -21,7 +21,7 @@ class ActivityApi(Api):
     def update_activity(self, activity: dict, activity_id: str):
         try:
             response = requests.patch(
-                f'http://localhost:8000/activities/activity/{activity_id}',
+                f'{self.url}{self.endpoint_base}activities/activity/{activity_id}',
                 headers={"Content-Type": "application/json"},
                 data=json.dumps(activity)
             )
