@@ -21,7 +21,7 @@ class ActivityApi(Api):
     def update_activity(self, activity: dict, activity_id: str):
         try:
             response = requests.patch(
-                f'{self.url}{self.endpoint_base}activities/activity/{activity_id}',
+                f'{self.url}{self.endpoint_base}activity/{activity_id}',
                 headers={"Content-Type": "application/json"},
                 data=json.dumps(activity)
             )
