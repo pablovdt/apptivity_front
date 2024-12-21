@@ -72,7 +72,7 @@ def activity_input_form(activity, cookies, button_text):
         if uploaded_file is not None:
             image_path = save_image(uploaded_file)
         else:
-            image_path = activity['image_path'] if activity['image_path'] else "images/APPTIVITY_cutted.png"
+            image_path = activity['image_path'] if activity['image_path'] else "images/APPTIVITY.png"
 
         submit_button = st.form_submit_button(button_text)
 
