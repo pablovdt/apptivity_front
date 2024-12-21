@@ -51,7 +51,7 @@ with col1:
 
 with col3:
     cities: list = city_api.get_cities()
-    cities_options = {"": ""}
+    cities_options = {"Todos": ""}
     cities_options.update({city["name"]: city["id"] for city in cities})
     city_selected_name = st.selectbox("Selecciona un municipio", cities_options.keys())
     city_id = cities_options[city_selected_name]

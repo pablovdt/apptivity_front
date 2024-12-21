@@ -68,6 +68,8 @@ st.write("---")
 
 st.header(f"{cookies['user_name']}, tus actividades",
           help="Aqui se muestran actividades basandose en tus categorías y en tu radio de notificación. (Puedes cambiarlo en la seccion ⚙ Configuración)")
+
+
 user_activities = user_api.get_user_activities(cookies['user_id'], all=False,
                                                date_from=datetime.now(pytz.timezone("Europe/Madrid")).strftime(
                                                    "%Y-%m-%d"))

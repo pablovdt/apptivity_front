@@ -77,7 +77,7 @@ if len(activities) >= 1:
 
         date_obj = datetime.fromisoformat(row['date'])
 
-        with st.popover(f"{row['name']} -- {date_obj.strftime('%A, %d de %B de %Y')}"):
+        with st.expander(f"{row['name']} -- {date_obj.strftime('%A, %d de %B de %Y')}"):
 
             st.subheader(row['name'])
             place = place_api.get_place_by_id(row["place_id"])

@@ -36,8 +36,6 @@ def check_password(cookies, person_email: str, person_password: str):
     elif user_api.validate_user(user_email=person_email, user_password=person_password):
         user_basic_info = user_api.get_user_basic_info(person_email)
 
-        print(user_basic_info)
-
         cookies['user_id'] = str(user_basic_info['id'])
         cookies['user_name'] = user_basic_info['name']
         cookies['user_email'] = person_email

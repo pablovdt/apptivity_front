@@ -89,7 +89,6 @@ def show_activity_details(item):
 
 if user_activities:
     df = pd.DataFrame(user_activities)
-    print(df)
     df_sorted = df.sort_values(by='date', ascending=False)
     col1, col2 = st.columns(2)
 
